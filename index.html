@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scan My Shadow — Privacy Audit</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: rgba(255,255,255,0.03);
+    --border: rgba(212,175,55,0.18);
+    --gold: #d4af37;
+    --gold-dim: rgba(212,175,55,0.6);
+    --gold-glow: rgba(212,175,55,0.12);
+    --text: #ffffff;
+    --subtext: rgba(234,230,242,0.6);
+    --radius: 999px;
+    --font: 'Inter', sans-serif;
+  }
+
+  html, body {
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-image:
+      radial-gradient(ellipse 60% 40% at 50% 0%, rgba(212,175,55,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(212,175,55,0.04) 0%, transparent 60%);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .logo-wrap img {
+    height: 28px;
+    width: auto;
+  }
+  .logo-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.01em;
+  }
+  .header-link {
+    font-size: 13px;
+    color: var(--subtext);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .header-link:hover { color: var(--gold); }
+
+  /* ── MAIN CONTAINER ── */
+  .container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+  }
+
+  .content {
+    max-width: 580px;
+    width: 100%;
+  }
+
+  /* ── HERO ── */
+  .hero-top {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .hero-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05));
+    border: 1px solid rgba(212,175,55,0.25);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+  }
+  .hero-icon svg {
+    width: 40px;
+    height: 40px;
+    stroke: var(--gold);
+    fill: none;
+    stroke-width: 1.5;
+  }
+  .hero-title {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: var(--subtext);
+    line-height: 1.7;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent);
+    margin: 40px 0;
+  }
+
+  /* ── PRICING CARD ── */
+  .pricing-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pricing-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .pricing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 18px;
+  }
+  .pricing-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(234,230,242,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .pricing-badge {
+    font-size: 11px;
+    background: rgba(212,175,55,0.15);
+    color: var(--gold);
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  .pricing-amount {
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .pricing-amount .currency {
+    font-size: 20px;
+    color: var(--gold);
+  }
+  .pricing-desc {
+    font-size: 13px;
+    color: var(--subtext);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .pricing-features {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: rgba(234,230,242,0.8);
+  }
+  .feature-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(212,175,55,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .feature-check svg {
+    width: 10px;
+    height: 10px;
+    stroke: var(--gold);
+    fill: none;
+    stroke-width: 2.5;
+  }
+
+  /* ── CTA BUTTON ── */
+  .cta-btn {
+    width: 100%;
+    background: linear-gradient(180deg, #d4af37, #b8962e);
+    color: #000;
+    border: none;
+    border-radius: var(--radius);
+    padding: 16px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    letter-spacing: 0.01em;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .cta-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+  .cta-btn:active { transform: translateY(0); }
+  .cta-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .cta-note {
+    text-align: center;
+    font-size: 11px;
+    color: var(--subtext);
+  }
+  .cta-note svg {
+    width: 11px;
+    height: 11px;
+    fill: var(--gold-dim);
+    vertical-align: middle;
+    margin-right: 3px;
+  }
+
+  /* ── TRUST ── */
+  .trust-block {
+    background: rgba(212,175,55,0.03);
+    border: 1px solid rgba(212,175,55,0.15);
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 12px;
+    color: rgba(234,230,242,0.7);
+    line-height: 1.7;
+    text-align: center;
+  }
+  .trust-block strong { color: rgba(234,230,242,0.95); display: block; margin-bottom: 6px; }
+
+  /* ── SPINNER ── */
+  .spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(0,0,0,0.2);
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 480px) {
+    .hero-title { font-size: 26px; }
+    .pricing-amount { font-size: 28px; }
+    .pricing-card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a class="logo-wrap" href="/">
+    <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="14" r="13" stroke="#d4af37" stroke-width="1.5" fill="none"/>
+      <circle cx="14" cy="14" r="5" fill="#d4af37" opacity="0.15"/>
+      <circle cx="14" cy="14" r="2.5" fill="#d4af37"/>
+      <path d="M14 4 L14 8 M14 20 L14 24 M4 14 L8 14 M20 14 L24 14" stroke="#d4af37" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>
+    <span class="logo-text">Scan My Shadow</span>
+  </a>
+  <a class="header-link" href="https://scanmyshadow.com">← Back to site</a>
+</div>
+
+<div class="container">
+  <div class="content">
+
+    <div class="hero-top">
+      <div class="hero-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="11"/>
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 1v4M12 19v4M23 12h-4M5 12H1"/>
+        </svg>
+      </div>
+      <h1 class="hero-title">See Your Digital Shadow</h1>
+      <p class="hero-sub">Find where your phone number, email, and photo appear across the open web and leaked databases. Fast. Simple. Private.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="pricing-card">
+      <div class="pricing-header">
+        <span class="pricing-label">Standard Scan</span>
+        <span class="pricing-badge">MOST POPULAR</span>
+      </div>
+      <div class="pricing-amount">
+        <span class="currency">₹</span><span>298</span>
+      </div>
+      <p class="pricing-desc">One-time payment. Get your results in minutes.</p>
+
+      <div class="pricing-features">
+        <div class="feature-item">
+          <div class="feature-check">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <span>Phone number scan (5 minutes)</span>
+        </div>
+        <div class="feature-item">
+          <div class="feature-check">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <span>Email address scan (5 minutes)</span>
+        </div>
+        <div class="feature-item">
+          <div class="feature-check">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <span>Photo reverse search (24 hours)</span>
+        </div>
+        <div class="feature-item">
+          <div class="feature-check">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <span>Breach location + timeline</span>
+        </div>
+        <div class="feature-item">
+          <div class="feature-check">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <span>Data automatically deleted in 96 hours</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="cta-btn" id="pay-btn" onclick="handlePayment()">
+      Continue to Secure Payment
+    </button>
+    <p class="cta-note">
+      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+      Powered by CCAvenue · Safe & encrypted
+    </p>
+
+    <div class="divider" style="margin: 28px 0 20px;"></div>
+
+    <div class="trust-block">
+      <strong>🔒 Test Mode Active</strong>
+      Your payment will be simulated. You'll be taken directly to the form next.
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function handlePayment() {
+    const btn = document.getElementById('pay-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Processing payment…';
+    
+    // Simulate payment processing (2 seconds)
+    setTimeout(() => {
+      // Redirect to form page
+      window.location.href = '/form';
+    }, 2000);
+  }
+</script>
+</body>
+</html>
