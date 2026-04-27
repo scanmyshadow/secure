@@ -524,22 +524,22 @@
     </div>
 
     <div class="card-title">Almost there</div>
-    <p class="card-sub">Your payment is confirmed. Share the details you'd like us to scan — we'll do the rest.</p>
+    <p class="card-sub">Your payment is confirmed. Share only what you'd like us to scan — even one is enough.</p>
 
     <div class="form-group" id="fg-email">
-      <label>Email Address <span class="label-note">to scan + receive report</span></label>
+      <label>Email Address <span class="label-note">optional</span></label>
       <input type="email" id="inp-email" placeholder="yourname@email.com" autocomplete="email">
       <div class="field-error">Please enter a valid email address.</div>
     </div>
 
     <div class="form-group" id="fg-phone">
-      <label>Mobile Number <span class="label-note">10-digit Indian number</span></label>
+      <label>Mobile Number <span class="label-note">optional</span></label>
       <input type="tel" id="inp-phone" placeholder="98XXXXXXXX" maxlength="10" autocomplete="tel">
       <div class="field-error">Please enter a valid 10-digit number.</div>
     </div>
 
     <div class="form-group" id="fg-photo">
-      <label>Your Photo <span class="label-note">clear face photo only</span></label>
+      <label>Your Photo <span class="label-note">optional</span></label>
       <div class="photo-upload" id="photo-drop">
         <input type="file" id="inp-photo" accept="image/jpeg,image/png,image/webp" onchange="handlePhoto(event)">
         <div class="photo-icon">
@@ -558,7 +558,7 @@
 
     <div class="notice">
       <span class="notice-icon">🔒</span>
-      <span>All three are scanned independently. Your photo is never linked to your email or phone in our system. Data is permanently deleted within 96 hours of your report delivery.</span>
+      <span>Each item is scanned independently. Share only what you're comfortable with. All data is permanently deleted within 96 hours of your report delivery.</span>
     </div>
 
     <button class="cta-btn" id="submit-btn" onclick="handleSubmit()">
@@ -612,9 +612,24 @@
 
     <div class="divider"></div>
     <p class="confirm-note">You can close this window. Everything will be in your email.<br>Need help? Email us at support@scanmyshadow.com</p>
+    <div style="margin-top:20px;">
+      <a href="https://scanmyshadow.com/#pricing" style="display:block;width:100%;background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.25);border-radius:999px;padding:13px 24px;font-size:13px;font-weight:600;color:#d4af37;text-align:center;text-decoration:none;font-family:'Inter',sans-serif;letter-spacing:0.01em;">Start a Fresh Scan →</a>
+    </div>
   </div>
 
 </div><!-- /card -->
+
+<!-- CONFIRM MODAL -->
+<div id="confirm-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:999;display:none;align-items:center;justify-content:center;padding:24px;">
+  <div style="background:#13131a;border:1px solid rgba(212,175,55,0.3);border-radius:16px;padding:28px;max-width:360px;width:100%;position:relative;">
+    <div style="font-size:17px;font-weight:600;color:#fff;margin-bottom:10px;">Ready to start your scan?</div>
+    <div id="modal-summary" style="font-size:13px;color:rgba(234,230,242,0.6);line-height:1.7;margin-bottom:22px;"></div>
+    <div style="display:flex;gap:10px;">
+      <button onclick="closeModal()" style="flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:12px;font-size:14px;font-weight:500;color:rgba(234,230,242,0.7);cursor:pointer;font-family:'Inter',sans-serif;">Go Back</button>
+      <button onclick="confirmSubmit()" style="flex:2;background:linear-gradient(180deg,#d4af37,#b8962e);border:none;border-radius:999px;padding:12px;font-size:14px;font-weight:600;color:#000;cursor:pointer;font-family:'Inter',sans-serif;">Yes, Start Scan</button>
+    </div>
+  </div>
+</div>
 
 <script>
   let photoSelected = false;
@@ -652,45 +667,52 @@
   }
 
   function handleSubmit() {
+    const email = document.getElementById('inp-email').value.trim();
+    const phone = document.getElementById('inp-phone').value.trim();
+
+    // Clear previous errors
+    document.getElementById('fg-email').classList.remove('has-error');
+    document.getElementById('fg-phone').classList.remove('has-error');
+
+    // Validate only if filled
     let valid = true;
-    const email = document.getElementById('inp-email').value;
-    const phone = document.getElementById('inp-phone').value;
-
-    // validate email
-    const fgEmail = document.getElementById('fg-email');
-    if (!validateEmail(email)) {
-      fgEmail.classList.add('has-error');
+    if (email && !validateEmail(email)) {
+      document.getElementById('fg-email').classList.add('has-error');
       valid = false;
-    } else {
-      fgEmail.classList.remove('has-error');
     }
-
-    // validate phone
-    const fgPhone = document.getElementById('fg-phone');
-    if (!validatePhone(phone)) {
-      fgPhone.classList.add('has-error');
+    if (phone && !validatePhone(phone)) {
+      document.getElementById('fg-phone').classList.add('has-error');
       valid = false;
-    } else {
-      fgPhone.classList.remove('has-error');
     }
-
-    // validate photo
-    const fgPhoto = document.getElementById('fg-photo');
-    if (!photoSelected) {
-      fgPhoto.classList.add('has-error');
-      valid = false;
-    } else {
-      fgPhoto.classList.remove('has-error');
-    }
-
     if (!valid) return;
 
-    // Show loading
+    // At least one field required
+    if (!email && !phone && !photoSelected) {
+      alert('Please share at least one detail to scan.');
+      return;
+    }
+
+    // Build summary for modal
+    let items = [];
+    if (email) items.push('📧 Email: ' + email);
+    if (phone) items.push('📱 Phone: ' + phone);
+    if (photoSelected) items.push('🖼️ Photo: uploaded');
+    document.getElementById('modal-summary').innerHTML = 'You are submitting:<br><br>' + items.join('<br>');
+
+    // Show modal
+    const modal = document.getElementById('confirm-modal');
+    modal.style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('confirm-modal').style.display = 'none';
+  }
+
+  function confirmSubmit() {
+    closeModal();
     const btn = document.getElementById('submit-btn');
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span>Submitting…';
-
-    // Simulate submission (replace with real API call)
     setTimeout(() => {
       document.getElementById('form-view').style.display = 'none';
       document.getElementById('confirmation').style.display = 'block';
