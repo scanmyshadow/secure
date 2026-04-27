@@ -546,7 +546,7 @@
           <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
         </div>
         <div class="photo-label-main">Tap to upload photo</div>
-        <div class="photo-label-sub">JPG or PNG · Under 5MB · Clear face visible</div>
+        <div class="photo-label-sub">JPG or PNG · Under 20MB · Clear face visible</div>
       </div>
       <div class="photo-preview" id="photo-preview">
         <img id="preview-img" src="" alt="preview">
@@ -632,15 +632,20 @@
 </div>
 
 <script>
+  const WEBHOOK = 'https://hook.eu1.make.com/jc9j68md1m3q1kopous8bgctpthoi065';
+  const scanId = new URLSearchParams(window.location.search).get('scan_id') || '';
+
   let photoSelected = false;
+  let photoFile = null;
 
   function handlePhoto(e) {
     const file = e.target.files[0];
     if (!file) return;
-    if (file.size > 5 * 1024 * 1024) {
-      alert('Photo must be under 5MB. Please choose a smaller file.');
+    if (file.size > 20 * 1024 * 1024) {
+      alert('Photo must be under 20MB. Please choose a smaller file.');
       return;
     }
+    photoFile = file;
     photoSelected = true;
     const reader = new FileReader();
     reader.onload = function(ev) {
@@ -654,6 +659,7 @@
 
   function removePhoto() {
     photoSelected = false;
+    photoFile = null;
     document.getElementById('inp-photo').value = '';
     document.getElementById('preview-img').src = '';
     document.getElementById('photo-preview').style.display = 'none';
@@ -670,11 +676,9 @@
     const email = document.getElementById('inp-email').value.trim();
     const phone = document.getElementById('inp-phone').value.trim();
 
-    // Clear previous errors
     document.getElementById('fg-email').classList.remove('has-error');
     document.getElementById('fg-phone').classList.remove('has-error');
 
-    // Validate only if filled
     let valid = true;
     if (email && !validateEmail(email)) {
       document.getElementById('fg-email').classList.add('has-error');
@@ -686,37 +690,84 @@
     }
     if (!valid) return;
 
-    // At least one field required
     if (!email && !phone && !photoSelected) {
       alert('Please share at least one detail to scan.');
       return;
     }
 
-    // Build summary for modal
     let items = [];
     if (email) items.push('📧 Email: ' + email);
     if (phone) items.push('📱 Phone: ' + phone);
     if (photoSelected) items.push('🖼️ Photo: uploaded');
     document.getElementById('modal-summary').innerHTML = 'You are submitting:<br><br>' + items.join('<br>');
 
-    // Show modal
-    const modal = document.getElementById('confirm-modal');
-    modal.style.display = 'flex';
+    document.getElementById('confirm-modal').style.display = 'flex';
   }
 
   function closeModal() {
     document.getElementById('confirm-modal').style.display = 'none';
   }
 
-  function confirmSubmit() {
+  // Compress image to ~1MB using Canvas API
+  function compressPhoto(file) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        const img = new Image();
+        img.onload = function() {
+          try {
+            const canvas = document.createElement('canvas');
+            const MAX_PX = 1600;
+            let w = img.width, h = img.height;
+            if (w > MAX_PX || h > MAX_PX) {
+              if (w > h) { h = Math.round(h * MAX_PX / w); w = MAX_PX; }
+              else { w = Math.round(w * MAX_PX / h); h = MAX_PX; }
+            }
+            canvas.width = w;
+            canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            const compressed = canvas.toDataURL('image/jpeg', 0.82);
+            resolve(compressed);
+          } catch(err) {
+            // Canvas failed — fall back to original
+            resolve(ev.target.result);
+          }
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function confirmSubmit() {
     closeModal();
     const btn = document.getElementById('submit-btn');
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span>Submitting…';
-    setTimeout(() => {
-      document.getElementById('form-view').style.display = 'none';
-      document.getElementById('confirmation').style.display = 'block';
-    }, 1800);
+
+    const email = document.getElementById('inp-email').value.trim();
+    const phone = document.getElementById('inp-phone').value.trim();
+
+    let photo_base64 = '';
+    if (photoFile) {
+      photo_base64 = await compressPhoto(photoFile);
+    }
+
+    const payload = { scan_id: scanId, phone, email, photo_base64 };
+
+    try {
+      await fetch(WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch(err) {
+      // Network error — still show confirmation, team will follow up
+      console.error('Webhook error:', err);
+    }
+
+    document.getElementById('form-view').style.display = 'none';
+    document.getElementById('confirmation').style.display = 'block';
   }
 
   // Phone: numbers only
