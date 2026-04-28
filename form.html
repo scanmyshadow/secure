@@ -30,70 +30,18 @@ body {
 }
 .wrap { width: 100%; max-width: 460px; }
 .logo { text-align: center; margin-bottom: 28px; }
-.logo-text {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 32px 28px;
-}
+.logo-text { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; }
 .card-title { font-size: 20px; font-weight: 600; margin-bottom: 6px; }
 .card-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.55; }
-.divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.3;
-  margin-bottom: 24px;
-}
+.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.3; margin-bottom: 24px; }
 .field { margin-bottom: 16px; }
-label {
-  display: block;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--muted);
-  margin-bottom: 6px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-input[type="email"], input[type="tel"] {
-  width: 100%;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  padding: 11px 14px;
-  outline: none;
-  transition: border-color 0.2s;
-}
-input[type="email"]:focus, input[type="tel"]:focus {
-  border-color: rgba(212,175,55,0.5);
-}
-.photo-area {
-  position: relative;
-  border: 1px dashed rgba(212,175,55,0.3);
-  border-radius: 10px;
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
-}
+label { display: block; font-size: 11px; font-weight: 500; color: var(--muted); margin-bottom: 6px; letter-spacing: 0.06em; text-transform: uppercase; }
+input[type="email"], input[type="tel"] { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: 'Inter', sans-serif; font-size: 14px; padding: 11px 14px; outline: none; transition: border-color 0.2s; }
+input[type="email"]:focus, input[type="tel"]:focus { border-color: rgba(212,175,55,0.5); }
+.photo-area { position: relative; border: 1px dashed rgba(212,175,55,0.3); border-radius: 10px; padding: 20px; text-align: center; cursor: pointer; transition: border-color 0.2s; }
 .photo-area:hover { border-color: var(--gold); background: rgba(212,175,55,0.03); }
-.photo-area input[type="file"] {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-}
+.photo-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
 .photo-icon { font-size: 22px; margin-bottom: 6px; }
 .photo-hint { font-size: 13px; color: var(--muted); }
 .photo-hint span { color: var(--gold); font-weight: 500; }
@@ -101,38 +49,11 @@ input[type="email"]:focus, input[type="tel"]:focus {
 #photoPreview img { max-width: 100px; max-height: 100px; border-radius: 8px; border: 1px solid var(--border); object-fit: cover; }
 #photoName { font-size: 11px; color: var(--muted); margin-top: 5px; }
 .field-note { font-size: 11px; color: var(--muted); margin-top: 5px; }
-.error-banner {
-  display: none;
-  background: rgba(224,92,92,0.1);
-  border: 1px solid rgba(224,92,92,0.3);
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 13px;
-  color: var(--red);
-  margin-bottom: 16px;
-  line-height: 1.5;
-}
-.btn {
-  width: 100%;
-  padding: 13px;
-  background: linear-gradient(180deg, var(--gold), var(--gold2));
-  color: #000;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  border: none;
-  border-radius: 999px;
-  cursor: pointer;
-  margin-top: 8px;
-  transition: opacity 0.2s;
-}
+.error-banner { display: none; background: rgba(224,92,92,0.1); border: 1px solid rgba(224,92,92,0.3); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: var(--red); margin-bottom: 16px; line-height: 1.5; }
+.btn { width: 100%; padding: 13px; background: linear-gradient(180deg, var(--gold), var(--gold2)); color: #000; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; border: none; border-radius: 999px; cursor: pointer; margin-top: 8px; transition: opacity 0.2s; }
 .btn:hover { opacity: 0.9; }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.success {
-  display: none;
-  text-align: center;
-  padding: 48px 20px;
-}
+.success { display: none; text-align: center; padding: 48px 20px; }
 .success-icon { font-size: 40px; margin-bottom: 16px; }
 .success-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
 .success-sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
@@ -141,24 +62,19 @@ input[type="email"]:focus, input[type="tel"]:focus {
 <body>
 <div class="wrap">
   <div class="logo"><div class="logo-text">Scan My Shadow</div></div>
-
   <div class="card" id="formCard">
     <div class="card-title">Submit Your Details</div>
     <div class="card-sub">We'll scan the open web and data breach records. At least one field required.</div>
     <div class="divider"></div>
-
     <div class="error-banner" id="errorBanner"></div>
-
     <div class="field">
       <label>Email Address</label>
       <input type="email" id="emailInput" placeholder="you@example.com" autocomplete="off">
     </div>
-
     <div class="field">
       <label>Phone Number</label>
       <input type="tel" id="phoneInput" placeholder="+91 98765 43210" autocomplete="off">
     </div>
-
     <div class="field">
       <label>Photo <span style="color:var(--muted);font-weight:400;font-size:11px;text-transform:none">(optional)</span></label>
       <div class="photo-area">
@@ -170,104 +86,61 @@ input[type="email"]:focus, input[type="tel"]:focus {
           <div id="photoName"></div>
         </div>
       </div>
-      <div class="field-note">Max 20MB. Compressed before sending.</div>
+      <div class="field-note">Max 20MB.</div>
     </div>
-
     <button class="btn" id="submitBtn" onclick="handleSubmit()">Start My Scan →</button>
   </div>
-
   <div class="success" id="successCard">
     <div class="success-icon">✅</div>
     <div class="success-title">Scan Submitted</div>
     <div class="success-sub">We're scanning the web for your data.<br>Your report will arrive by email shortly.</div>
   </div>
 </div>
-
 <script>
 const WEBHOOK = 'https://hook.eu1.make.com/jc9j68md1m3q1kopous8bgctpthoi065';
-
 const params = new URLSearchParams(window.location.search);
 const scanId = params.get('scan_id') || '';
 if (!/^SMS-[A-Z0-9]+-PS$/.test(scanId)) {
-  document.querySelector('.card-sub').textContent = 'Invalid or missing scan ID. Please use the link from your payment confirmation.';
+  document.querySelector('.card-sub').textContent = 'Invalid or missing scan ID.';
   document.getElementById('submitBtn').disabled = true;
 }
 
-let photoBase64 = '';
-document.getElementById('photoInput').addEventListener('change', async function(e) {
+let photoFile = null;
+document.getElementById('photoInput').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
-  if (file.size > 20 * 1024 * 1024) {
-    showError('Photo must be under 20MB.');
-    this.value = '';
-    return;
-  }
-  try {
-    photoBase64 = await compressPhoto(file);
-    document.getElementById('previewImg').src = 'data:image/jpeg;base64,' + photoBase64;
+  if (file.size > 20 * 1024 * 1024) { showError('Photo must be under 20MB.'); this.value = ''; return; }
+  photoFile = file;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('previewImg').src = e.target.result;
     document.getElementById('photoName').textContent = file.name;
     document.getElementById('photoPreview').style.display = 'block';
-    hideError();
-  } catch(err) {
-    showError('Could not process photo. Try a different image.');
-  }
+  };
+  reader.readAsDataURL(file);
+  hideError();
 });
-
-function compressPhoto(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onerror = reject;
-    reader.onload = function(e) {
-      const img = new Image();
-      img.onerror = reject;
-      img.onload = function() {
-        const MAX = 1600;
-        let w = img.width, h = img.height;
-        if (w > MAX || h > MAX) {
-          if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
-          else { w = Math.round(w * MAX / h); h = MAX; }
-        }
-        const canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
-        resolve(dataUrl.split(',')[1]); // raw base64, no prefix
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
 
 async function handleSubmit() {
   hideError();
   const email = document.getElementById('emailInput').value.trim();
   const phone = document.getElementById('phoneInput').value.trim();
-
-  if (!email && !phone && !photoBase64) {
-    showError('Please provide at least one: email, phone, or photo.');
-    return;
-  }
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    showError('Please enter a valid email address.');
-    return;
-  }
+  if (!email && !phone && !photoFile) { showError('Please provide at least one: email, phone, or photo.'); return; }
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address.'); return; }
 
   const btn = document.getElementById('submitBtn');
   btn.disabled = true;
   btn.textContent = 'Submitting…';
 
-  const payload = { scan_id: scanId };
-  if (email) payload.email = email;
-  if (phone) payload.phone = phone;
-  if (photoBase64) payload.photo_base64 = photoBase64;
+  // Send as multipart/form-data — Make receives photo as binary file object
+  const fd = new FormData();
+  fd.append('scan_id', scanId);
+  if (email) fd.append('email', email);
+  if (phone) fd.append('phone', phone);
+  if (photoFile) fd.append('photo', photoFile, photoFile.name);
 
   try {
-    const res = await fetch(WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
+    const res = await fetch(WEBHOOK, { method: 'POST', body: fd });
     if (!res.ok) throw new Error('Server error ' + res.status);
     document.getElementById('formCard').style.display = 'none';
     document.getElementById('successCard').style.display = 'block';
@@ -278,14 +151,8 @@ async function handleSubmit() {
   }
 }
 
-function showError(msg) {
-  const b = document.getElementById('errorBanner');
-  b.textContent = msg;
-  b.style.display = 'block';
-}
-function hideError() {
-  document.getElementById('errorBanner').style.display = 'none';
-}
+function showError(msg) { const b = document.getElementById('errorBanner'); b.textContent = msg; b.style.display = 'block'; }
+function hideError() { document.getElementById('errorBanner').style.display = 'none'; }
 </script>
 </body>
 </html>
