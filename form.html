@@ -4,137 +4,614 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scan My Shadow — Submit Your Details</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --gold: #d4af37;
   --gold2: #b8962e;
-  --bg: #0a0a0f;
-  --card: rgba(255,255,255,0.04);
-  --border: rgba(255,255,255,0.1);
-  --muted: rgba(234,230,242,0.6);
-  --text: #fff;
+  --gold-glow: rgba(212,175,55,0.15);
+  --gold-border: rgba(212,175,55,0.25);
+  --bg: #080810;
+  --card: rgba(255,255,255,0.03);
+  --border: rgba(255,255,255,0.08);
+  --muted: rgba(234,230,242,0.55);
+  --text: #f0eef8;
   --red: #e05c5c;
+  --green: #3ecf8e;
 }
+
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 32px 16px;
+  overflow-x: hidden;
 }
-.wrap { width: 100%; max-width: 460px; }
-.logo { text-align: center; margin-bottom: 28px; }
-.logo-text { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
-.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; }
-.card-title { font-size: 20px; font-weight: 600; margin-bottom: 6px; }
-.card-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.55; }
-.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.3; margin-bottom: 24px; }
-.field { margin-bottom: 16px; }
-label { display: block; font-size: 11px; font-weight: 500; color: var(--muted); margin-bottom: 6px; letter-spacing: 0.06em; text-transform: uppercase; }
-input[type="email"], input[type="tel"] { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: 'Inter', sans-serif; font-size: 14px; padding: 11px 14px; outline: none; transition: border-color 0.2s; }
-input[type="email"]:focus, input[type="tel"]:focus { border-color: rgba(212,175,55,0.5); }
-.photo-area { position: relative; border: 1px dashed rgba(212,175,55,0.3); border-radius: 10px; padding: 20px; text-align: center; cursor: pointer; transition: border-color 0.2s; }
-.photo-area:hover { border-color: var(--gold); background: rgba(212,175,55,0.03); }
-.photo-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-.photo-icon { font-size: 22px; margin-bottom: 6px; }
+
+/* Background atmosphere */
+body::before {
+  content: '';
+  position: fixed;
+  top: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(212,175,55,0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 1;
+  animation: fadeUp 0.6s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Logo */
+.logo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.logo-wordmark {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #b8922a, #f0d060, #d4af37, #f0d060, #b8922a);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+.logo-rule {
+  width: 32px; height: 1px;
+  background: var(--gold);
+  margin: 8px auto 0;
+  opacity: 0.4;
+}
+@keyframes shimmer { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
+
+/* Card */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 36px 32px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.4), transparent);
+}
+
+.card-eyebrow {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+.card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.card-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.2), transparent);
+  margin-bottom: 28px;
+}
+
+/* Fields */
+.field { margin-bottom: 18px; }
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 7px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.required-dot {
+  width: 4px; height: 4px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+input[type="email"], input[type="tel"] {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  padding: 12px 16px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+input[type="email"]:focus, input[type="tel"]:focus {
+  border-color: rgba(212,175,55,0.5);
+  background: rgba(212,175,55,0.04);
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.06);
+}
+input.valid {
+  border-color: rgba(62,207,142,0.4);
+}
+input.invalid {
+  border-color: rgba(224,92,92,0.5);
+}
+
+.field-note {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 6px;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+.field-note.highlight {
+  color: rgba(212,175,55,0.7);
+}
+
+/* Photo upload */
+.photo-area {
+  position: relative;
+  border: 1px dashed rgba(212,175,55,0.25);
+  border-radius: 12px;
+  padding: 22px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s;
+  background: rgba(212,175,55,0.02);
+}
+.photo-area:hover {
+  border-color: rgba(212,175,55,0.5);
+  background: rgba(212,175,55,0.04);
+}
+.photo-area.has-photo {
+  border-color: rgba(212,175,55,0.4);
+  border-style: solid;
+  background: rgba(212,175,55,0.04);
+}
+.photo-area input[type="file"] {
+  position: absolute; inset: 0;
+  opacity: 0; cursor: pointer;
+  width: 100%; height: 100%;
+}
+.photo-icon { font-size: 24px; margin-bottom: 7px; }
 .photo-hint { font-size: 13px; color: var(--muted); }
 .photo-hint span { color: var(--gold); font-weight: 500; }
-#photoPreview { display: none; margin-top: 12px; }
-#photoPreview img { max-width: 100px; max-height: 100px; border-radius: 8px; border: 1px solid var(--border); object-fit: cover; }
-#photoName { font-size: 11px; color: var(--muted); margin-top: 5px; }
-.field-note { font-size: 11px; color: var(--muted); margin-top: 5px; }
-.error-banner { display: none; background: rgba(224,92,92,0.1); border: 1px solid rgba(224,92,92,0.3); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: var(--red); margin-bottom: 16px; line-height: 1.5; }
-.btn { width: 100%; padding: 13px; background: linear-gradient(180deg, var(--gold), var(--gold2)); color: #000; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; border: none; border-radius: 999px; cursor: pointer; margin-top: 8px; transition: opacity 0.2s; }
-.btn:hover { opacity: 0.9; }
-.btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.success { display: none; text-align: center; padding: 48px 20px; }
-.success-icon { font-size: 40px; margin-bottom: 16px; }
-.success-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
-.success-sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
+#photoPreview { display: none; margin-top: 14px; align-items: center; gap: 12px; justify-content: center; }
+#photoPreview img { width: 56px; height: 56px; border-radius: 8px; border: 1px solid var(--gold-border); object-fit: cover; }
+#photoName { font-size: 11px; color: var(--muted); margin-top: 3px; word-break: break-all; }
+.photo-change { font-size: 11px; color: var(--gold); cursor: pointer; margin-top: 4px; }
+
+/* Error banner */
+.error-banner {
+  display: none;
+  background: rgba(224,92,92,0.08);
+  border: 1px solid rgba(224,92,92,0.25);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 13px;
+  color: var(--red);
+  margin-bottom: 18px;
+  line-height: 1.5;
+  animation: shake 0.3s ease;
+}
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* Button */
+.btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(180deg, var(--gold), var(--gold2));
+  color: #000;
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.btn:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(212,175,55,0.25);
+}
+.btn:active:not(:disabled) { transform: translateY(0); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Success */
+.success {
+  display: none;
+  text-align: center;
+  padding: 52px 24px;
+  animation: fadeUp 0.5s ease both;
+}
+.success-icon { font-size: 44px; margin-bottom: 18px; }
+.success-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px; font-weight: 700;
+  margin-bottom: 10px;
+}
+.success-sub { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+/* ── CONFIRMATION MODAL ── */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(8,8,16,0.85);
+  backdrop-filter: blur(6px);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.2s ease both;
+}
+.modal-overlay.open { display: flex; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  background: #0e0e1a;
+  border: 1px solid rgba(212,175,55,0.2);
+  border-radius: 20px;
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  animation: slideUp 0.25s ease both;
+}
+@keyframes slideUp { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.modal::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent);
+}
+
+.modal-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 17px; font-weight: 700;
+  margin-bottom: 6px;
+}
+.modal-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.confirm-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.confirm-row:last-of-type { border-bottom: none; }
+.confirm-icon { font-size: 16px; margin-top: 1px; flex-shrink: 0; }
+.confirm-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.confirm-value {
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 500;
+  word-break: break-all;
+}
+.confirm-value.empty {
+  color: rgba(255,255,255,0.2);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 13px;
+}
+.confirm-photo-thumb {
+  width: 48px; height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--gold-border);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+}
+.btn-ghost {
+  flex: 1;
+  padding: 12px;
+  background: transparent;
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+.btn-confirm {
+  flex: 2;
+  padding: 12px;
+  background: linear-gradient(180deg, var(--gold), var(--gold2));
+  color: #000;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: opacity 0.2s, box-shadow 0.2s;
+}
+.btn-confirm:hover { opacity: 0.9; box-shadow: 0 6px 20px rgba(212,175,55,0.2); }
+.btn-confirm:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.submitting-spinner {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border: 2px solid rgba(0,0,0,0.3);
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="logo"><div class="logo-text">Scan My Shadow</div></div>
+  <div class="logo">
+    <div class="logo-wordmark">Scan My Shadow</div>
+    <div class="logo-rule"></div>
+  </div>
+
   <div class="card" id="formCard">
-    <div class="card-title">Submit Your Details</div>
-    <div class="card-sub">We'll scan the open web and data breach records. At least one field required.</div>
+    <div class="card-eyebrow">Privacy Scan · ₹298</div>
+    <div class="card-title">What would you like us to scan?</div>
+    <div class="card-sub">Enter the details you'd like us to scan. Your report will be delivered to your email address.</div>
     <div class="divider"></div>
     <div class="error-banner" id="errorBanner"></div>
+
+    <!-- REPORT DELIVERY EMAIL — MANDATORY -->
     <div class="field">
-      <label>Email Address</label>
-      <input type="email" id="emailInput" placeholder="you@example.com" autocomplete="off">
+      <label>Report Delivery Email <span class="required-dot"></span></label>
+      <input type="email" id="reportEmailInput" placeholder="you@example.com" autocomplete="off">
+      <div class="field-note highlight">📩 Your report will be sent here. This email will not be scanned.</div>
     </div>
+
+    <div class="divider"></div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:18px;line-height:1.5;">Provide at least one item below to scan — phone, email, or photo.</div>
+
+    <!-- SCAN EMAIL — OPTIONAL -->
     <div class="field">
-      <label>Phone Number</label>
-      <input type="tel" id="phoneInput" placeholder="+91 98765 43210" autocomplete="off">
+      <label>Email to Scan <span style="color:var(--muted);font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
+      <input type="email" id="emailInput" placeholder="email you want scanned" autocomplete="off">
     </div>
+
+    <!-- PHONE -->
     <div class="field">
-      <label>Photo <span style="color:var(--muted);font-weight:400;font-size:11px;text-transform:none">(optional)</span></label>
-      <div class="photo-area">
+      <label>Phone Number <span style="color:var(--muted);font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
+      <input type="tel" id="phoneInput" placeholder="10-digit number" autocomplete="off" maxlength="10">
+      <div class="field-note">Enter 10 digits only, without country code.</div>
+    </div>
+
+    <!-- PHOTO -->
+    <div class="field">
+      <label>Photo <span style="color:var(--muted);font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
+      <div class="photo-area" id="photoArea">
         <input type="file" id="photoInput" accept="image/*">
         <div class="photo-icon">📷</div>
         <div class="photo-hint">Tap to upload — <span>browse</span></div>
         <div id="photoPreview">
-          <img id="previewImg" src="" alt="">
-          <div id="photoName"></div>
+          <div>
+            <img id="previewImg" src="" alt="">
+            <div id="photoName"></div>
+            <div class="photo-change">Change photo</div>
+          </div>
         </div>
       </div>
-      <div class="field-note">Max 20MB.</div>
+      <div class="field-note">Max 20MB · JPG, PNG, HEIC</div>
     </div>
-    <button class="btn" id="submitBtn" onclick="handleSubmit()">Start My Scan →</button>
+
+    <button class="btn" id="submitBtn" onclick="openConfirm()">Review &amp; Submit →</button>
   </div>
+
   <div class="success" id="successCard">
     <div class="success-icon">✅</div>
     <div class="success-title">Scan Submitted</div>
-    <div class="success-sub">We're scanning the web for your data.<br>Your report will arrive by email shortly.</div>
+    <div class="success-sub">We're scanning the web for your data.<br>Your report will arrive at your email shortly.</div>
   </div>
 </div>
+
+<!-- CONFIRMATION MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-title">Confirm Your Details</div>
+    <div class="modal-sub">Please check everything below before we start your scan.</div>
+
+    <div class="confirm-row">
+      <div class="confirm-icon">📩</div>
+      <div>
+        <div class="confirm-label">Report Delivery Email</div>
+        <div class="confirm-value" id="cReportEmail"></div>
+      </div>
+    </div>
+    <div class="confirm-row">
+      <div class="confirm-icon">🔍</div>
+      <div>
+        <div class="confirm-label">Email to Scan</div>
+        <div class="confirm-value" id="cEmail"></div>
+      </div>
+    </div>
+    <div class="confirm-row">
+      <div class="confirm-icon">📱</div>
+      <div>
+        <div class="confirm-label">Phone</div>
+        <div class="confirm-value" id="cPhone"></div>
+      </div>
+    </div>
+    <div class="confirm-row">
+      <div class="confirm-icon">📷</div>
+      <div>
+        <div class="confirm-label">Photo</div>
+        <div class="confirm-value" id="cPhoto"></div>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeConfirm()">← Edit</button>
+      <button class="btn-confirm" id="confirmBtn" onclick="handleSubmit()">Confirm &amp; Scan</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const WEBHOOK = 'https://hook.eu1.make.com/jc9j68md1m3q1kopous8bgctpthoi065';
 const params = new URLSearchParams(window.location.search);
 const scanId = params.get('scan_id') || '';
+
 if (!/^SMS-[A-Z0-9]+-PS$/.test(scanId)) {
-  document.querySelector('.card-sub').textContent = 'Invalid or missing scan ID.';
+  document.querySelector('.card-sub').textContent = 'Invalid or missing scan ID. Please use the link from your payment confirmation.';
   document.getElementById('submitBtn').disabled = true;
 }
 
 let photoFile = null;
+
 document.getElementById('photoInput').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
-  if (file.size > 20 * 1024 * 1024) { showError('Photo must be under 20MB.'); this.value = ''; return; }
+  if (file.size > 20 * 1024 * 1024) {
+    showError('Photo must be under 20MB.');
+    this.value = '';
+    return;
+  }
   photoFile = file;
   const reader = new FileReader();
   reader.onload = function(e) {
     document.getElementById('previewImg').src = e.target.result;
     document.getElementById('photoName').textContent = file.name;
-    document.getElementById('photoPreview').style.display = 'block';
+    document.getElementById('photoPreview').style.display = 'flex';
+    document.getElementById('photoArea').classList.add('has-photo');
+    document.querySelector('.photo-icon').style.display = 'none';
+    document.querySelector('.photo-hint').style.display = 'none';
   };
   reader.readAsDataURL(file);
   hideError();
 });
 
-async function handleSubmit() {
+// Live phone validation — digits only, max 10
+document.getElementById('phoneInput').addEventListener('input', function() {
+  this.value = this.value.replace(/\D/g, '').slice(0, 10);
+});
+
+function openConfirm() {
   hideError();
+  const reportEmail = document.getElementById('reportEmailInput').value.trim();
   const email = document.getElementById('emailInput').value.trim();
   const phone = document.getElementById('phoneInput').value.trim();
-  if (!email && !phone && !photoFile) { showError('Please provide at least one: email, phone, or photo.'); return; }
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address.'); return; }
 
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.textContent = 'Submitting…';
+  if (!reportEmail) { showError('Report delivery email is required.'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reportEmail)) { showError('Please enter a valid report delivery email.'); return; }
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email to scan.'); return; }
+  if (phone && phone.length !== 10) { showError('Phone number must be exactly 10 digits.'); return; }
+  if (!email && !phone && !photoFile) { showError('Please provide at least one item to scan — email, phone, or photo.'); return; }
 
-  // Send as multipart/form-data — Make receives photo as binary file object
+  document.getElementById('cReportEmail').textContent = reportEmail;
+
+  const cEmail = document.getElementById('cEmail');
+  if (email) { cEmail.textContent = email; cEmail.classList.remove('empty'); }
+  else { cEmail.textContent = 'Not provided'; cEmail.classList.add('empty'); }
+  if (phone) { cPhone.textContent = phone; cPhone.classList.remove('empty'); }
+  else { cPhone.textContent = 'Not provided'; cPhone.classList.add('empty'); }
+
+  const cPhoto = document.getElementById('cPhoto');
+  cPhoto.innerHTML = '';
+  if (photoFile) {
+    const img = document.createElement('img');
+    img.src = document.getElementById('previewImg').src;
+    img.className = 'confirm-photo-thumb';
+    cPhoto.appendChild(img);
+    cPhoto.classList.remove('empty');
+  } else {
+    cPhoto.textContent = 'Not provided';
+    cPhoto.classList.add('empty');
+  }
+
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeConfirm() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+async function handleSubmit() {
+  const confirmBtn = document.getElementById('confirmBtn');
+  confirmBtn.disabled = true;
+  confirmBtn.innerHTML = '<span class="submitting-spinner"></span>Submitting…';
+
+  const reportEmail = document.getElementById('reportEmailInput').value.trim();
+  const email = document.getElementById('emailInput').value.trim();
+  const phone = document.getElementById('phoneInput').value.trim();
+
   const fd = new FormData();
   fd.append('scan_id', scanId);
+  fd.append('report_email', reportEmail);
   if (email) fd.append('email', email);
   if (phone) fd.append('phone', phone);
   if (photoFile) fd.append('photo', photoFile, photoFile.name);
@@ -142,16 +619,24 @@ async function handleSubmit() {
   try {
     const res = await fetch(WEBHOOK, { method: 'POST', body: fd });
     if (!res.ok) throw new Error('Server error ' + res.status);
+    closeConfirm();
     document.getElementById('formCard').style.display = 'none';
     document.getElementById('successCard').style.display = 'block';
   } catch(err) {
+    closeConfirm();
     showError('Something went wrong. Please try again.');
-    btn.disabled = false;
-    btn.textContent = 'Start My Scan →';
+    confirmBtn.disabled = false;
+    confirmBtn.innerHTML = 'Confirm &amp; Scan';
   }
 }
 
-function showError(msg) { const b = document.getElementById('errorBanner'); b.textContent = msg; b.style.display = 'block'; }
+function showError(msg) {
+  const b = document.getElementById('errorBanner');
+  b.textContent = msg;
+  b.style.display = 'block';
+  b.style.animation = 'none';
+  setTimeout(() => b.style.animation = '', 10);
+}
 function hideError() { document.getElementById('errorBanner').style.display = 'none'; }
 </script>
 </body>
