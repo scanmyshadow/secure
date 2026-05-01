@@ -574,12 +574,13 @@ function openConfirm() {
 
   document.getElementById('cReportEmail').textContent = reportEmail;
 
-  const cEmail = document.getElementById('cEmail');
-  if (email) { cEmail.textContent = email; cEmail.classList.remove('empty'); }
-  else { cEmail.textContent = 'Not provided'; cEmail.classList.add('empty'); }
-  if (phone) { cPhone.textContent = phone; cPhone.classList.remove('empty'); }
-  else { cPhone.textContent = 'Not provided'; cPhone.classList.add('empty'); }
-
+const cEmail = document.getElementById('cEmail');
+const cPhone = document.getElementById('cPhone');
+if (email) { cEmail.textContent = email; cEmail.classList.remove('empty'); }
+else { cEmail.textContent = 'Not provided'; cEmail.classList.add('empty'); }
+if (phone) { cPhone.textContent = phone; cPhone.classList.remove('empty'); }
+else { cPhone.textContent = 'Not provided'; cPhone.classList.add('empty'); }
+  
   const cPhoto = document.getElementById('cPhoto');
   cPhoto.innerHTML = '';
   if (photoFile) {
