@@ -422,7 +422,7 @@ input.invalid {
   </div>
 
   <div class="card" id="formCard">
-    <div class="card-eyebrow">Privacy Scan · ₹298</div>
+    <div class="card-eyebrow">Secure Submission Form</div>
     <div class="card-title">What would you like us to scan?</div>
     <div class="card-sub">Enter the details you'd like us to scan. Your report will be delivered to your email address.</div>
     <div class="divider"></div>
@@ -524,9 +524,9 @@ input.invalid {
 <script>
 const WEBHOOK = 'https://hook.eu1.make.com/d64h0uqyu661dj1l2xwhayfnmwemmuyl';
 const params = new URLSearchParams(window.location.search);
-const scanId = params.get('scan_id') || '';
+const scanId = params.get('payment_id') || '';
 
-if (!/^SMS-[A-Z0-9]+-PS$/.test(scanId)) {
+if (!/^pay_[A-Za-z0-9]+$/.test(scanId)) {
   document.querySelector('.card-sub').textContent = 'Invalid or missing scan ID. Please use the link from your payment confirmation.';
   document.getElementById('submitBtn').disabled = true;
 }
