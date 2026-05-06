@@ -422,7 +422,7 @@ input.invalid {
   </div>
 
   <div class="card" id="formCard">
-    <div class="card-eyebrow">Secure Submission Form</div>
+    <div class="card-eyebrow">Privacy Scan · ₹298</div>
     <div class="card-title">What would you like us to scan?</div>
     <div class="card-sub">Enter the details you'd like us to scan. Your report will be delivered to your email address.</div>
     <div class="divider"></div>
@@ -430,30 +430,30 @@ input.invalid {
 
     <!-- REPORT DELIVERY EMAIL — MANDATORY -->
     <div class="field">
-      <label>Report Delivery Email <span class="required-dot"></span></label>
+      <label>Confirm your report delivery email <span class="required-dot"></span></label>
       <input type="email" id="reportEmailInput" placeholder="you@example.com" autocomplete="off">
-      <div class="field-note highlight">📩 Your report will be sent here. This email will not be scanned.</div>
+      <div class="field-note highlight">📩 Must match the email you entered during payment.</div>
     </div>
 
     <div class="divider"></div>
-    <div style="font-size:11px;color:var(--muted);margin-bottom:18px;line-height:1.5;">Provide the requested information below to begin the scan — Phone, email, photo.</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:18px;line-height:1.5;">Provide at least one item below to scan — phone, email, or photo.</div>
 
     <!-- SCAN EMAIL — OPTIONAL -->
     <div class="field">
-      <label>Email to Scan</label>
+      <label>Email to Scan <span style="color:var(--muted);font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
       <input type="email" id="emailInput" placeholder="email you want scanned" autocomplete="off">
     </div>
 
     <!-- PHONE -->
     <div class="field">
-      <label>Phone Number</label>
+      <label>Phone Number <span style="color:var(--muted);font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
       <input type="tel" id="phoneInput" placeholder="10-digit number" autocomplete="off" maxlength="10">
       <div class="field-note">Enter 10 digits only, without country code.</div>
     </div>
 
     <!-- PHOTO -->
     <div class="field">
-      <label>Photo</label>
+      <label>Photo <span style="color:var(--muted);font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
       <div class="photo-area" id="photoArea">
         <input type="file" id="photoInput" accept="image/*">
         <div class="photo-icon">📷</div>
@@ -523,13 +523,6 @@ input.invalid {
 
 <script>
 const WEBHOOK = 'https://hook.eu1.make.com/d64h0uqyu661dj1l2xwhayfnmwemmuyl';
-const params = new URLSearchParams(window.location.search);
-const scanId = params.get('payment_id') || '';
-
-if (!/^pay_[A-Za-z0-9]+$/.test(scanId)) {
-  document.querySelector('.card-sub').textContent = 'Invalid or missing payment ID. Please use the link from your payment confirmation.';
-  document.getElementById('submitBtn').disabled = true;
-}
 
 let photoFile = null;
 
@@ -611,7 +604,6 @@ async function handleSubmit() {
   const phone = document.getElementById('phoneInput').value.trim();
 
   const fd = new FormData();
-  fd.append('scan_id', scanId);
   fd.append('report_email', reportEmail);
   if (email) fd.append('email', email);
   if (phone) fd.append('phone', phone);
