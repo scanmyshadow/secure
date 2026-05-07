@@ -34,7 +34,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Background atmosphere */
 body::before {
   content: '';
   position: fixed;
@@ -59,7 +58,6 @@ body::before {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Logo */
 .logo {
   text-align: center;
   margin-bottom: 32px;
@@ -85,7 +83,6 @@ body::before {
 }
 @keyframes shimmer { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
 
-/* Card */
 .card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -133,7 +130,6 @@ body::before {
   margin-bottom: 28px;
 }
 
-/* Fields */
 .field { margin-bottom: 18px; }
 
 label {
@@ -171,12 +167,8 @@ input[type="email"]:focus, input[type="tel"]:focus {
   background: rgba(212,175,55,0.04);
   box-shadow: 0 0 0 3px rgba(212,175,55,0.06);
 }
-input.valid {
-  border-color: rgba(62,207,142,0.4);
-}
-input.invalid {
-  border-color: rgba(224,92,92,0.5);
-}
+input.valid { border-color: rgba(62,207,142,0.4); }
+input.invalid { border-color: rgba(224,92,92,0.5); }
 
 .field-note {
   font-size: 11px;
@@ -185,11 +177,8 @@ input.invalid {
   line-height: 1.5;
   opacity: 0.8;
 }
-.field-note.highlight {
-  color: rgba(212,175,55,0.7);
-}
+.field-note.highlight { color: rgba(212,175,55,0.7); }
 
-/* Photo upload */
 .photo-area {
   position: relative;
   border: 1px dashed rgba(212,175,55,0.25);
@@ -222,7 +211,6 @@ input.invalid {
 #photoName { font-size: 11px; color: var(--muted); margin-top: 3px; word-break: break-all; }
 .photo-change { font-size: 11px; color: var(--gold); cursor: pointer; margin-top: 4px; }
 
-/* Error banner */
 .error-banner {
   display: none;
   background: rgba(224,92,92,0.08);
@@ -241,7 +229,6 @@ input.invalid {
   75% { transform: translateX(4px); }
 }
 
-/* Button */
 .btn {
   width: 100%;
   padding: 14px;
@@ -267,22 +254,45 @@ input.invalid {
 .btn:active:not(:disabled) { transform: translateY(0); }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-/* Success */
-.success {
+/* Redirect / payment state */
+.redirect-card {
   display: none;
   text-align: center;
   padding: 52px 24px;
   animation: fadeUp 0.5s ease both;
 }
-.success-icon { font-size: 44px; margin-bottom: 18px; }
-.success-title {
+.redirect-spinner {
+  width: 40px; height: 40px;
+  border: 3px solid rgba(212,175,55,0.15);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 20px;
+}
+.redirect-title {
   font-family: 'Syne', sans-serif;
   font-size: 20px; font-weight: 700;
   margin-bottom: 10px;
 }
-.success-sub { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.redirect-sub { font-size: 13px; color: var(--muted); line-height: 1.7; }
 
-/* ── CONFIRMATION MODAL ── */
+/* Error state */
+.blocked-card {
+  display: none;
+  text-align: center;
+  padding: 52px 24px;
+  animation: fadeUp 0.5s ease both;
+}
+.blocked-icon { font-size: 36px; margin-bottom: 16px; }
+.blocked-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px; font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--red);
+}
+.blocked-sub { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+/* Modal */
 .modal-overlay {
   display: none;
   position: fixed; inset: 0;
@@ -421,39 +431,40 @@ input.invalid {
     <div class="logo-rule"></div>
   </div>
 
+  <!-- MAIN FORM CARD -->
   <div class="card" id="formCard">
-    <div class="card-eyebrow">Privacy Scan · ₹298</div>
+    <div class="card-eyebrow" id="cardEyebrow">Privacy Scan</div>
     <div class="card-title">What would you like us to scan?</div>
-    <div class="card-sub">Enter the details you'd like us to scan. Your report will be delivered to your email address.</div>
+    <div class="card-sub">Enter the details below. Your report will be delivered to the email you provide.</div>
     <div class="divider"></div>
     <div class="error-banner" id="errorBanner"></div>
 
-    <!-- REPORT DELIVERY EMAIL — MANDATORY -->
+    <!-- REPORT DELIVERY EMAIL -->
     <div class="field">
-      <label>Confirm your report delivery email <span class="required-dot"></span></label>
+      <label>Report Delivery Email <span class="required-dot"></span></label>
       <input type="email" id="reportEmailInput" placeholder="you@example.com" autocomplete="off">
-      <div class="field-note highlight">📩 Must match the email you entered during payment.</div>
+      <div class="field-note highlight">📩 Your report will be sent here. Enter the same email on the payment page.</div>
     </div>
 
     <div class="divider"></div>
-    <div style="font-size:11px;color:var(--muted);margin-bottom:18px;line-height:1.5;">Provide at least one item below to scan — phone, email, or photo.</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:18px;line-height:1.5;">Provide at least one item to scan — phone, email, or photo.</div>
 
-    <!-- SCAN EMAIL — OPTIONAL -->
+    <!-- SCAN EMAIL -->
     <div class="field">
-      <label>Email to Scan <span style="color:var(--muted);font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
+      <label>Email to Scan</label>
       <input type="email" id="emailInput" placeholder="email you want scanned" autocomplete="off">
     </div>
 
-    <!-- PHONE -->
+    <!-- SCAN PHONE -->
     <div class="field">
-      <label>Phone Number <span style="color:var(--muted);font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
+      <label>Phone Number</label>
       <input type="tel" id="phoneInput" placeholder="10-digit number" autocomplete="off" maxlength="10">
-      <div class="field-note">Enter 10 digits only, without country code.</div>
+      <div class="field-note">10 digits only, without country code.</div>
     </div>
 
     <!-- PHOTO -->
     <div class="field">
-      <label>Photo <span style="color:var(--muted);font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
+      <label>Photo</label>
       <div class="photo-area" id="photoArea">
         <input type="file" id="photoInput" accept="image/*">
         <div class="photo-icon">📷</div>
@@ -469,13 +480,21 @@ input.invalid {
       <div class="field-note">Max 20MB · JPG, PNG, HEIC</div>
     </div>
 
-    <button class="btn" id="submitBtn" onclick="openConfirm()">Review &amp; Submit →</button>
+    <button class="btn" id="submitBtn" onclick="openConfirm()">Review &amp; Continue →</button>
   </div>
 
-  <div class="success" id="successCard">
-    <div class="success-icon">✅</div>
-    <div class="success-title">Scan Submitted</div>
-    <div class="success-sub">We're scanning the web for your data.<br>Your report will arrive at your email shortly.</div>
+  <!-- REDIRECTING STATE -->
+  <div class="card redirect-card" id="redirectCard">
+    <div class="redirect-spinner"></div>
+    <div class="redirect-title">Taking you to payment…</div>
+    <div class="redirect-sub" id="redirectSub">Your details have been saved.<br>Complete your payment to start the scan.</div>
+  </div>
+
+  <!-- BLOCKED STATE (missing/invalid tier) -->
+  <div class="card blocked-card" id="blockedCard">
+    <div class="blocked-icon">⚠️</div>
+    <div class="blocked-title">Invalid Link</div>
+    <div class="blocked-sub">This form link appears to be incomplete. Please use the button on the Scan My Shadow website to get started.</div>
   </div>
 </div>
 
@@ -483,7 +502,7 @@ input.invalid {
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-title">Confirm Your Details</div>
-    <div class="modal-sub">Please check everything below before we start your scan.</div>
+    <div class="modal-sub">Check everything below — then complete payment to start your scan.</div>
 
     <div class="confirm-row">
       <div class="confirm-icon">📩</div>
@@ -516,15 +535,36 @@ input.invalid {
 
     <div class="modal-actions">
       <button class="btn-ghost" onclick="closeConfirm()">← Edit</button>
-      <button class="btn-confirm" id="confirmBtn" onclick="handleSubmit()">Confirm &amp; Scan</button>
+      <button class="btn-confirm" id="confirmBtn" onclick="handleSubmit()">Confirm &amp; Pay →</button>
     </div>
   </div>
 </div>
 
 <script>
+// ── CONFIG ──────────────────────────────────────────────────────────────
 const WEBHOOK = 'https://hook.eu1.make.com/d64h0uqyu661dj1l2xwhayfnmwemmuyl';
+const RAZORPAY_URLS = {
+  '298': 'https://rzp.io/rzp/scanmyshadow-Privacy-Scan',
+  '998': 'https://rzp.io/rzp/scanmyshadow-deep-dive'
+};
+const EYEBROWS = {
+  '298': '₹298 · Privacy Scan',
+  '998': '₹998 · Deep Dive'
+};
 
-let photoFile = null;
+// ── TIER VALIDATION ──────────────────────────────────────────────────────
+const params = new URLSearchParams(window.location.search);
+const tier = params.get('tier');
+
+if (!tier || !RAZORPAY_URLS[tier]) {
+  document.getElementById('formCard').style.display = 'none';
+  document.getElementById('blockedCard').style.display = 'block';
+} else {
+  document.getElementById('cardEyebrow').textContent = EYEBROWS[tier];
+}
+
+// ── PHOTO HANDLING ───────────────────────────────────────────────────────
+let compressedPhotoBlob = null;
 
 document.getElementById('photoInput').addEventListener('change', function(e) {
   const file = e.target.files[0];
@@ -534,9 +574,28 @@ document.getElementById('photoInput').addEventListener('change', function(e) {
     this.value = '';
     return;
   }
-  photoFile = file;
+
   const reader = new FileReader();
   reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      // Compress: max 1600px on longest side, JPEG 0.85
+      const MAX = 1600;
+      let w = img.width, h = img.height;
+      if (w > MAX || h > MAX) {
+        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      canvas.toBlob(function(blob) {
+        compressedPhotoBlob = blob;
+      }, 'image/jpeg', 0.85);
+    };
+    img.src = e.target.result;
+
+    // Show preview
     document.getElementById('previewImg').src = e.target.result;
     document.getElementById('photoName').textContent = file.name;
     document.getElementById('photoPreview').style.display = 'flex';
@@ -548,39 +607,40 @@ document.getElementById('photoInput').addEventListener('change', function(e) {
   hideError();
 });
 
-// Live phone validation — digits only, max 10
+// ── PHONE: digits only ───────────────────────────────────────────────────
 document.getElementById('phoneInput').addEventListener('input', function() {
   this.value = this.value.replace(/\D/g, '').slice(0, 10);
 });
 
+// ── OPEN CONFIRM MODAL ───────────────────────────────────────────────────
 function openConfirm() {
   hideError();
   const reportEmail = document.getElementById('reportEmailInput').value.trim();
-  const email = document.getElementById('emailInput').value.trim();
-  const phone = document.getElementById('phoneInput').value.trim();
+  const email       = document.getElementById('emailInput').value.trim();
+  const phone       = document.getElementById('phoneInput').value.trim();
 
   if (!reportEmail) { showError('Report delivery email is required.'); return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reportEmail)) { showError('Please enter a valid report delivery email.'); return; }
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email to scan.'); return; }
   if (phone && phone.length !== 10) { showError('Phone number must be exactly 10 digits.'); return; }
-  if (!email && !phone && !photoFile) { showError('Please provide at least one item to scan — email, phone, or photo.'); return; }
+  if (!email && !phone && !compressedPhotoBlob) { showError('Please provide at least one item to scan — email, phone, or photo.'); return; }
 
   document.getElementById('cReportEmail').textContent = reportEmail;
 
-const cEmail = document.getElementById('cEmail');
-const cPhone = document.getElementById('cPhone');
-if (email) { cEmail.textContent = email; cEmail.classList.remove('empty'); }
-else { cEmail.textContent = 'Not provided'; cEmail.classList.add('empty'); }
-if (phone) { cPhone.textContent = phone; cPhone.classList.remove('empty'); }
-else { cPhone.textContent = 'Not provided'; cPhone.classList.add('empty'); }
-  
+  const cEmail = document.getElementById('cEmail');
+  const cPhone = document.getElementById('cPhone');
+  if (email) { cEmail.textContent = email; cEmail.classList.remove('empty'); }
+  else { cEmail.textContent = 'Not provided'; cEmail.classList.add('empty'); }
+  if (phone) { cPhone.textContent = phone; cPhone.classList.remove('empty'); }
+  else { cPhone.textContent = 'Not provided'; cPhone.classList.add('empty'); }
+
   const cPhoto = document.getElementById('cPhoto');
   cPhoto.innerHTML = '';
-  if (photoFile) {
-    const img = document.createElement('img');
-    img.src = document.getElementById('previewImg').src;
-    img.className = 'confirm-photo-thumb';
-    cPhoto.appendChild(img);
+  if (compressedPhotoBlob) {
+    const thumbImg = document.createElement('img');
+    thumbImg.src = document.getElementById('previewImg').src;
+    thumbImg.className = 'confirm-photo-thumb';
+    cPhoto.appendChild(thumbImg);
     cPhoto.classList.remove('empty');
   } else {
     cPhoto.textContent = 'Not provided';
@@ -594,32 +654,49 @@ function closeConfirm() {
   document.getElementById('modalOverlay').classList.remove('open');
 }
 
+// ── SUBMIT ───────────────────────────────────────────────────────────────
 async function handleSubmit() {
   const confirmBtn = document.getElementById('confirmBtn');
   confirmBtn.disabled = true;
-  confirmBtn.innerHTML = '<span class="submitting-spinner"></span>Submitting…';
+  confirmBtn.innerHTML = '<span class="submitting-spinner"></span>Saving…';
 
   const reportEmail = document.getElementById('reportEmailInput').value.trim();
-  const email = document.getElementById('emailInput').value.trim();
-  const phone = document.getElementById('phoneInput').value.trim();
+  const email       = document.getElementById('emailInput').value.trim();
+  const phone       = document.getElementById('phoneInput').value.trim();
+
+  // Build scan types for Col L
+  const scanTypes = [];
+  if (phone) scanTypes.push('phone');
+  if (email) scanTypes.push('email');
+  if (compressedPhotoBlob) scanTypes.push('photo');
 
   const fd = new FormData();
   fd.append('report_email', reportEmail);
-  if (email) fd.append('email', email);
-  if (phone) fd.append('phone', phone);
-  if (photoFile) fd.append('photo', photoFile, photoFile.name);
+  fd.append('tier', tier);
+  fd.append('scan_types', scanTypes.join(','));
+  if (email) fd.append('scan_email', email);
+  if (phone) fd.append('scan_phone', phone);
+  if (compressedPhotoBlob) fd.append('photo', compressedPhotoBlob, 'photo.jpg');
 
   try {
     const res = await fetch(WEBHOOK, { method: 'POST', body: fd });
     if (!res.ok) throw new Error('Server error ' + res.status);
+
+    // Show redirect state
     closeConfirm();
     document.getElementById('formCard').style.display = 'none';
-    document.getElementById('successCard').style.display = 'block';
+    document.getElementById('redirectCard').style.display = 'block';
+
+    // Redirect after 1.5s
+    setTimeout(function() {
+      window.location.href = RAZORPAY_URLS[tier];
+    }, 1500);
+
   } catch(err) {
     closeConfirm();
     showError('Something went wrong. Please try again.');
     confirmBtn.disabled = false;
-    confirmBtn.innerHTML = 'Confirm &amp; Scan';
+    confirmBtn.innerHTML = 'Confirm &amp; Pay →';
   }
 }
 
