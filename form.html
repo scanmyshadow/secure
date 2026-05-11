@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scan My Shadow — Submit Your Details</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -24,7 +24,7 @@
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   min-height: 100vh;
   display: flex;
@@ -34,7 +34,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Background atmosphere */
 body::before {
   content: '';
   position: fixed;
@@ -59,15 +58,14 @@ body::before {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Logo */
 .logo {
   text-align: center;
   margin-bottom: 32px;
 }
 .logo-wordmark {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   background: linear-gradient(90deg, #b8922a, #f0d060, #d4af37, #f0d060, #b8922a);
@@ -85,7 +83,6 @@ body::before {
 }
 @keyframes shimmer { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
 
-/* Card */
 .card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -102,18 +99,8 @@ body::before {
   background: linear-gradient(90deg, transparent, rgba(212,175,55,0.4), transparent);
 }
 
-.card-eyebrow {
-  font-family: 'Syne', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 10px;
-  opacity: 0.8;
-}
 .card-title {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 8px;
@@ -133,7 +120,6 @@ body::before {
   margin-bottom: 28px;
 }
 
-/* Fields */
 .field { margin-bottom: 18px; }
 
 label {
@@ -141,7 +127,7 @@ label {
   align-items: center;
   gap: 6px;
   font-size: 10.5px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--muted);
   margin-bottom: 7px;
   letter-spacing: 0.08em;
@@ -160,7 +146,7 @@ input[type="email"], input[type="tel"] {
   border: 1px solid var(--border);
   border-radius: 12px;
   color: var(--text);
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   padding: 12px 16px;
   outline: none;
@@ -171,12 +157,8 @@ input[type="email"]:focus, input[type="tel"]:focus {
   background: rgba(212,175,55,0.04);
   box-shadow: 0 0 0 3px rgba(212,175,55,0.06);
 }
-input.valid {
-  border-color: rgba(62,207,142,0.4);
-}
-input.invalid {
-  border-color: rgba(224,92,92,0.5);
-}
+input.valid { border-color: rgba(62,207,142,0.4); }
+input.invalid { border-color: rgba(224,92,92,0.5); }
 
 .field-note {
   font-size: 11px;
@@ -185,11 +167,25 @@ input.invalid {
   line-height: 1.5;
   opacity: 0.8;
 }
-.field-note.highlight {
-  color: rgba(212,175,55,0.7);
-}
+.field-note.highlight { color: rgba(212,175,55,0.7); }
 
-/* Photo upload */
+.spam-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 9px 12px;
+  background: rgba(212,175,55,0.05);
+  border: 1px solid rgba(212,175,55,0.15);
+  border-radius: 8px;
+  font-size: 11.5px;
+  color: rgba(234,230,242,0.65);
+  line-height: 1.55;
+  word-break: break-word;
+}
+.spam-note span:first-child { flex-shrink: 0; }
+.spam-note span:last-child { min-width: 0; }
+
 .photo-area {
   position: relative;
   border: 1px dashed rgba(212,175,55,0.25);
@@ -222,7 +218,6 @@ input.invalid {
 #photoName { font-size: 11px; color: var(--muted); margin-top: 3px; word-break: break-all; }
 .photo-change { font-size: 11px; color: var(--gold); cursor: pointer; margin-top: 4px; }
 
-/* Error banner */
 .error-banner {
   display: none;
   background: rgba(224,92,92,0.08);
@@ -241,13 +236,12 @@ input.invalid {
   75% { transform: translateX(4px); }
 }
 
-/* Button */
 .btn {
   width: 100%;
   padding: 14px;
   background: linear-gradient(180deg, var(--gold), var(--gold2));
   color: #000;
-  font-family: 'Syne', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -267,7 +261,6 @@ input.invalid {
 .btn:active:not(:disabled) { transform: translateY(0); }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-/* Success */
 .success {
   display: none;
   text-align: center;
@@ -276,13 +269,36 @@ input.invalid {
 }
 .success-icon { font-size: 44px; margin-bottom: 18px; }
 .success-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 20px; font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
   margin-bottom: 10px;
 }
-.success-sub { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.success-sub {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.success-spam {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 11px 16px;
+  background: rgba(212,175,55,0.06);
+  border: 1px solid rgba(212,175,55,0.18);
+  border-radius: 10px;
+  font-size: 12px;
+  color: rgba(234,230,242,0.7);
+  line-height: 1.55;
+  text-align: left;
+  max-width: 340px;
+  margin: 0 auto;
+  word-break: break-word;
+}
+.success-spam span:first-child { flex-shrink: 0; }
+.success-spam span:last-child { min-width: 0; }
 
-/* ── CONFIRMATION MODAL ── */
 .modal-overlay {
   display: none;
   position: fixed; inset: 0;
@@ -318,8 +334,9 @@ input.invalid {
 }
 
 .modal-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 17px; font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
   margin-bottom: 6px;
 }
 .modal-sub {
@@ -375,7 +392,7 @@ input.invalid {
   padding: 12px;
   background: transparent;
   color: var(--muted);
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 500;
   border: 1px solid var(--border);
@@ -389,7 +406,7 @@ input.invalid {
   padding: 12px;
   background: linear-gradient(180deg, var(--gold), var(--gold2));
   color: #000;
-  font-family: 'Syne', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -422,36 +439,35 @@ input.invalid {
   </div>
 
   <div class="card" id="formCard">
-    <div class="card-eyebrow">Privacy Scan · ₹298</div>
     <div class="card-title">What would you like us to scan?</div>
     <div class="card-sub">Enter the details you'd like us to scan. Your report will be delivered to your email address.</div>
     <div class="divider"></div>
     <div class="error-banner" id="errorBanner"></div>
 
-    <!-- REPORT DELIVERY EMAIL — MANDATORY -->
     <div class="field">
-      <label>Confirm your report delivery email <span class="required-dot"></span></label>
+      <label>Report Delivery Email <span class="required-dot"></span></label>
       <input type="email" id="reportEmailInput" placeholder="you@example.com" autocomplete="off">
-      <div class="field-note highlight">📩 Must match the email you entered during payment.</div>
+      <div class="field-note highlight">📩 Your report will be sent here. This email will not be scanned.</div>
+      <div class="spam-note">
+        <span>📬</span>
+        <span>Report emails sometimes land in <strong>Spam or Promotions</strong>. Check there if you don't see it within 10 minutes.</span>
+      </div>
     </div>
 
     <div class="divider"></div>
     <div style="font-size:11px;color:var(--muted);margin-bottom:18px;line-height:1.5;">Provide at least one item below to scan — phone, email, or photo.</div>
 
-    <!-- SCAN EMAIL — OPTIONAL -->
     <div class="field">
       <label>Email to Scan <span style="color:var(--muted);font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
       <input type="email" id="emailInput" placeholder="email you want scanned" autocomplete="off">
     </div>
 
-    <!-- PHONE -->
     <div class="field">
       <label>Phone Number <span style="color:var(--muted);font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
       <input type="tel" id="phoneInput" placeholder="10-digit number" autocomplete="off" maxlength="10">
       <div class="field-note">Enter 10 digits only, without country code.</div>
     </div>
 
-    <!-- PHOTO -->
     <div class="field">
       <label>Photo <span style="color:var(--muted);font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
       <div class="photo-area" id="photoArea">
@@ -476,10 +492,13 @@ input.invalid {
     <div class="success-icon">✅</div>
     <div class="success-title">Scan Submitted</div>
     <div class="success-sub">We're scanning the web for your data.<br>Your report will arrive at your email shortly.</div>
+    <div class="success-spam">
+      <span>📬</span>
+      <span>Don't see the email? Check your <strong>Spam or Promotions</strong> folder. It can take up to 10 minutes.</span>
+    </div>
   </div>
 </div>
 
-<!-- CONFIRMATION MODAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-title">Confirm Your Details</div>
@@ -523,6 +542,13 @@ input.invalid {
 
 <script>
 const WEBHOOK = 'https://hook.eu1.make.com/d64h0uqyu661dj1l2xwhayfnmwemmuyl';
+const params = new URLSearchParams(window.location.search);
+const scanId = params.get('scan_id') || '';
+
+if (!/^SMS-[A-Z0-9]+-PS$/.test(scanId)) {
+  document.querySelector('.card-sub').textContent = 'Invalid or missing scan ID. Please use the link from your payment confirmation.';
+  document.getElementById('submitBtn').disabled = true;
+}
 
 let photoFile = null;
 
@@ -548,7 +574,6 @@ document.getElementById('photoInput').addEventListener('change', function(e) {
   hideError();
 });
 
-// Live phone validation — digits only, max 10
 document.getElementById('phoneInput').addEventListener('input', function() {
   this.value = this.value.replace(/\D/g, '').slice(0, 10);
 });
@@ -567,13 +592,13 @@ function openConfirm() {
 
   document.getElementById('cReportEmail').textContent = reportEmail;
 
-const cEmail = document.getElementById('cEmail');
-const cPhone = document.getElementById('cPhone');
-if (email) { cEmail.textContent = email; cEmail.classList.remove('empty'); }
-else { cEmail.textContent = 'Not provided'; cEmail.classList.add('empty'); }
-if (phone) { cPhone.textContent = phone; cPhone.classList.remove('empty'); }
-else { cPhone.textContent = 'Not provided'; cPhone.classList.add('empty'); }
-  
+  const cEmail = document.getElementById('cEmail');
+  const cPhone = document.getElementById('cPhone');
+  if (email) { cEmail.textContent = email; cEmail.classList.remove('empty'); }
+  else { cEmail.textContent = 'Not provided'; cEmail.classList.add('empty'); }
+  if (phone) { cPhone.textContent = phone; cPhone.classList.remove('empty'); }
+  else { cPhone.textContent = 'Not provided'; cPhone.classList.add('empty'); }
+
   const cPhoto = document.getElementById('cPhoto');
   cPhoto.innerHTML = '';
   if (photoFile) {
@@ -604,6 +629,7 @@ async function handleSubmit() {
   const phone = document.getElementById('phoneInput').value.trim();
 
   const fd = new FormData();
+  fd.append('scan_id', scanId);
   fd.append('report_email', reportEmail);
   if (email) fd.append('email', email);
   if (phone) fd.append('phone', phone);
