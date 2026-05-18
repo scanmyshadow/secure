@@ -272,16 +272,71 @@ input.invalid {
 .success {
   display: none;
   text-align: center;
-  padding: 52px 24px;
-  animation: fadeUp 0.5s ease both;
+  padding: 56px 28px 52px;
+  animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) both;
 }
-.success-icon { font-size: 44px; margin-bottom: 18px; }
+
+/* Checkmark circle */
+.success-circle {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(212,175,55,0.12), rgba(212,175,55,0.04));
+  border: 1.5px solid rgba(212,175,55,0.35);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 28px;
+  position: relative;
+  box-shadow: 0 0 32px rgba(212,175,55,0.12), 0 0 0 8px rgba(212,175,55,0.04);
+  animation: circlePop 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both;
+}
+@keyframes circlePop {
+  from { transform: scale(0.7); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+.success-circle svg {
+  width: 32px; height: 32px;
+  animation: checkDraw 0.4s ease 0.4s both;
+}
+@keyframes checkDraw {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Title */
 .success-title {
   font-family: 'Syne', sans-serif;
-  font-size: 20px; font-weight: 700;
-  margin-bottom: 10px;
+  font-size: 22px; font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.01em;
+  margin-bottom: 14px;
+  animation: fadeUp 0.5s ease 0.3s both;
 }
-.success-sub { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+/* Gold divider */
+.success-divider {
+  width: 40px; height: 1.5px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  margin: 0 auto 20px;
+  animation: fadeUp 0.5s ease 0.4s both;
+}
+
+/* Subtext */
+.success-sub {
+  font-size: 13.5px;
+  color: rgba(234,230,242,0.72);
+  line-height: 1.85;
+  max-width: 300px;
+  margin: 0 auto 0;
+  animation: fadeUp 0.5s ease 0.5s both;
+}
+.success-spam {
+  margin-top: 18px;
+  font-size: 12px;
+  color: rgba(234,230,242,0.38);
+  line-height: 1.7;
+  display: flex; align-items: flex-start; justify-content: center; gap: 6px;
+  animation: fadeUp 0.5s ease 0.6s both;
+}
+.success-spam svg { flex-shrink: 0; margin-top: 2px; opacity: 0.5; }
 
 /* ── CONFIRMATION MODAL ── */
 .modal-overlay {
@@ -475,9 +530,25 @@ input.invalid {
   </div>
 
   <div class="success" id="successCard">
-    <div class="success-icon">✅</div>
+    <div class="success-circle">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="6,17 13,24 26,9" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
     <div class="success-title">Scan Submitted</div>
-    <div class="success-sub">We're scanning the web for your data.<br>Your report will arrive at your email shortly.</div>
+    <div class="success-divider"></div>
+    <div class="success-sub">
+      We're scanning the web for your data.<br>
+      Your report will arrive at your email shortly.
+    </div>
+    <div class="success-spam">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/>
+        <line x1="8" y1="5" x2="8" y2="9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        <circle cx="8" cy="11.5" r="0.75" fill="currentColor"/>
+      </svg>
+      <span>Can't find it? Check your <strong style="color:rgba(234,230,242,0.55);font-weight:500;">Spam</strong> or <strong style="color:rgba(234,230,242,0.55);font-weight:500;">Promotions</strong> folder — it may have landed there.</span>
+    </div>
   </div>
 </div>
 
