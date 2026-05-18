@@ -12,20 +12,20 @@
   --gold2: #b8962e;
   --gold-glow: rgba(212,175,55,0.15);
   --gold-border: rgba(212,175,55,0.25);
-  --bg: #1a1a24;
-  --card: rgba(255,255,255,0.07);
-  --border: rgba(255,255,255,0.18);
-  --muted: rgba(234,230,242,0.82);
-  --text: #ffffff;
-  --red: #ff7070;
-  --green: #4df5a8;
+  --bg: #080810;
+  --card: rgba(255,255,255,0.03);
+  --border: rgba(255,255,255,0.08);
+  --muted: rgba(234,230,242,0.55);
+  --text: #f0eef8;
+  --red: #e05c5c;
+  --green: #3ecf8e;
 }
 
 body {
   background: var(--bg);
   color: var(--text);
   font-family: 'DM Sans', sans-serif;
-  font-size: 15.4px;
+  font-size: 14px;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -66,7 +66,7 @@ body::before {
 }
 .logo-wordmark {
   font-family: 'Syne', sans-serif;
-  font-size: 14.3px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -104,7 +104,7 @@ body::before {
 
 .card-eyebrow {
   font-family: 'Syne', sans-serif;
-  font-size: 12.1px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -114,14 +114,14 @@ body::before {
 }
 .card-title {
   font-family: 'Syne', sans-serif;
-  font-size: 24.2px;
+  font-size: 22px;
   font-weight: 700;
   margin-bottom: 8px;
   letter-spacing: -0.01em;
   line-height: 1.2;
 }
 .card-sub {
-  font-size: 14.3px;
+  font-size: 13px;
   color: var(--muted);
   margin-bottom: 28px;
   line-height: 1.6;
@@ -140,7 +140,7 @@ label {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 11.6px;
+  font-size: 10.5px;
   font-weight: 500;
   color: var(--muted);
   margin-bottom: 7px;
@@ -156,12 +156,12 @@ label {
 
 input[type="email"], input[type="tel"] {
   width: 100%;
-  background: rgba(255,255,255,0.09);
+  background: rgba(255,255,255,0.04);
   border: 1px solid var(--border);
   border-radius: 12px;
   color: var(--text);
   font-family: 'DM Sans', sans-serif;
-  font-size: 15.4px;
+  font-size: 14px;
   padding: 12px 16px;
   outline: none;
   transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
@@ -179,7 +179,7 @@ input.invalid {
 }
 
 .field-note {
-  font-size: 12.1px;
+  font-size: 11px;
   color: var(--muted);
   margin-top: 6px;
   line-height: 1.5;
@@ -214,13 +214,14 @@ input.invalid {
   opacity: 0; cursor: pointer;
   width: 100%; height: 100%;
 }
-.photo-icon { font-size: 26.4px; margin-bottom: 7px; }
-.photo-hint { font-size: 14.3px; color: var(--muted); }
+.photo-area.has-photo input[type="file"] { pointer-events: none; }
+.photo-icon { font-size: 24px; margin-bottom: 7px; }
+.photo-hint { font-size: 13px; color: var(--muted); }
 .photo-hint span { color: var(--gold); font-weight: 500; }
 #photoPreview { display: none; margin-top: 14px; align-items: center; gap: 12px; justify-content: center; }
 #photoPreview img { width: 56px; height: 56px; border-radius: 8px; border: 1px solid var(--gold-border); object-fit: cover; }
-#photoName { font-size: 12.1px; color: var(--muted); margin-top: 3px; word-break: break-all; }
-.photo-change { font-size: 12.1px; color: var(--gold); cursor: pointer; margin-top: 4px; }
+#photoName { font-size: 11px; color: var(--muted); margin-top: 3px; word-break: break-all; }
+.photo-change { font-size: 11px; color: var(--gold); cursor: pointer; margin-top: 4px; }
 
 /* Error banner */
 .error-banner {
@@ -229,7 +230,7 @@ input.invalid {
   border: 1px solid rgba(224,92,92,0.25);
   border-radius: 10px;
   padding: 11px 14px;
-  font-size: 14.3px;
+  font-size: 13px;
   color: var(--red);
   margin-bottom: 18px;
   line-height: 1.5;
@@ -248,7 +249,7 @@ input.invalid {
   background: linear-gradient(180deg, var(--gold), var(--gold2));
   color: #000;
   font-family: 'Syne', sans-serif;
-  font-size: 15.4px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.04em;
   border: none;
@@ -274,13 +275,13 @@ input.invalid {
   padding: 52px 24px;
   animation: fadeUp 0.5s ease both;
 }
-.success-icon { font-size: 48.4px; margin-bottom: 18px; }
+.success-icon { font-size: 44px; margin-bottom: 18px; }
 .success-title {
   font-family: 'Syne', sans-serif;
-  font-size: 22px; font-weight: 700;
+  font-size: 20px; font-weight: 700;
   margin-bottom: 10px;
 }
-.success-sub { font-size: 14.3px; color: var(--muted); line-height: 1.7; }
+.success-sub { font-size: 13px; color: var(--muted); line-height: 1.7; }
 
 /* ── CONFIRMATION MODAL ── */
 .modal-overlay {
@@ -298,7 +299,7 @@ input.invalid {
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .modal {
-  background: #1e1e2e;
+  background: #0e0e1a;
   border: 1px solid rgba(212,175,55,0.2);
   border-radius: 20px;
   padding: 32px 28px;
@@ -319,11 +320,11 @@ input.invalid {
 
 .modal-title {
   font-family: 'Syne', sans-serif;
-  font-size: 18.7px; font-weight: 700;
+  font-size: 17px; font-weight: 700;
   margin-bottom: 6px;
 }
 .modal-sub {
-  font-size: 13.2px;
+  font-size: 12px;
   color: var(--muted);
   margin-bottom: 24px;
   line-height: 1.5;
@@ -337,9 +338,9 @@ input.invalid {
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 .confirm-row:last-of-type { border-bottom: none; }
-.confirm-icon { font-size: 17.6px; margin-top: 1px; flex-shrink: 0; }
+.confirm-icon { font-size: 16px; margin-top: 1px; flex-shrink: 0; }
 .confirm-label {
-  font-size: 12.1px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -347,7 +348,7 @@ input.invalid {
   margin-bottom: 2px;
 }
 .confirm-value {
-  font-size: 15.4px;
+  font-size: 14px;
   color: var(--text);
   font-weight: 500;
   word-break: break-all;
@@ -356,7 +357,7 @@ input.invalid {
   color: rgba(255,255,255,0.2);
   font-style: italic;
   font-weight: 400;
-  font-size: 14.3px;
+  font-size: 13px;
 }
 .confirm-photo-thumb {
   width: 48px; height: 48px;
@@ -376,7 +377,7 @@ input.invalid {
   background: transparent;
   color: var(--muted);
   font-family: 'DM Sans', sans-serif;
-  font-size: 14.3px;
+  font-size: 13px;
   font-weight: 500;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -390,7 +391,7 @@ input.invalid {
   background: linear-gradient(180deg, var(--gold), var(--gold2));
   color: #000;
   font-family: 'Syne', sans-serif;
-  font-size: 14.3px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.04em;
   border: none;
@@ -422,7 +423,7 @@ input.invalid {
   </div>
 
   <div class="card" id="formCard">
-    <div class="card-eyebrow">Secure Submission Form</div>
+    <div class="card-eyebrow">Privacy Scan · ₹298</div>
     <div class="card-title">What would you like us to scan?</div>
     <div class="card-sub">Enter the details you'd like us to scan. Your report will be delivered to your email address.</div>
     <div class="divider"></div>
@@ -430,30 +431,30 @@ input.invalid {
 
     <!-- REPORT DELIVERY EMAIL — MANDATORY -->
     <div class="field">
-      <label>Report Delivery Email <span class="required-dot"></span></label>
+      <label>Confirm your report delivery email <span class="required-dot"></span></label>
       <input type="email" id="reportEmailInput" placeholder="you@example.com" autocomplete="off">
-      <div class="field-note highlight">📩 Your report will be sent here. This email will not be scanned.</div>
+      <div class="field-note highlight">📩 Must match the email you entered during payment.</div>
     </div>
 
     <div class="divider"></div>
-    <div style="font-size:12.1px;color:var(--muted);margin-bottom:18px;line-height:1.5;">Provide the requested information below to begin the scan — Phone, email, photo.</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:18px;line-height:1.5;">Provide at least one item below to scan — phone, email, or photo.</div>
 
     <!-- SCAN EMAIL — OPTIONAL -->
     <div class="field">
-      <label>Email to Scan</label>
+      <label>Email to Scan <span style="color:var(--muted);font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
       <input type="email" id="emailInput" placeholder="email you want scanned" autocomplete="off">
     </div>
 
     <!-- PHONE -->
     <div class="field">
-      <label>Phone Number</label>
+      <label>Phone Number <span style="color:var(--muted);font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
       <input type="tel" id="phoneInput" placeholder="10-digit number" autocomplete="off" maxlength="10">
       <div class="field-note">Enter 10 digits only, without country code.</div>
     </div>
 
     <!-- PHOTO -->
     <div class="field">
-      <label>Photo</label>
+      <label>Photo <span style="color:var(--muted);font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(optional)</span></label>
       <div class="photo-area" id="photoArea">
         <input type="file" id="photoInput" accept="image/*">
         <div class="photo-icon">📷</div>
@@ -462,7 +463,8 @@ input.invalid {
           <div>
             <img id="previewImg" src="" alt="">
             <div id="photoName"></div>
-            <div class="photo-change">Change photo</div>
+            <div class="photo-change" onclick="document.getElementById('photoInput').click()">Change photo</div>
+            <div class="photo-change" style="color:var(--red);margin-top:2px;" onclick="removePhoto(event)">Remove photo</div>
           </div>
         </div>
       </div>
@@ -523,8 +525,6 @@ input.invalid {
 
 <script>
 const WEBHOOK = 'https://hook.eu1.make.com/d64h0uqyu661dj1l2xwhayfnmwemmuyl';
-const params = new URLSearchParams(window.location.search);
-const scanId = params.get('payment_id') || '';
 
 let photoFile = null;
 
@@ -549,6 +549,16 @@ document.getElementById('photoInput').addEventListener('change', function(e) {
   reader.readAsDataURL(file);
   hideError();
 });
+
+function removePhoto(e) {
+  e.stopPropagation();
+  photoFile = null;
+  document.getElementById('photoInput').value = '';
+  document.getElementById('photoPreview').style.display = 'none';
+  document.getElementById('photoArea').classList.remove('has-photo');
+  document.querySelector('.photo-icon').style.display = '';
+  document.querySelector('.photo-hint').style.display = '';
+}
 
 // Live phone validation — digits only, max 10
 document.getElementById('phoneInput').addEventListener('input', function() {
@@ -606,7 +616,6 @@ async function handleSubmit() {
   const phone = document.getElementById('phoneInput').value.trim();
 
   const fd = new FormData();
-  fd.append('scan_id', scanId);
   fd.append('report_email', reportEmail);
   if (email) fd.append('email', email);
   if (phone) fd.append('phone', phone);
