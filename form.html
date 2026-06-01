@@ -755,6 +755,13 @@ input.invalid { border-color: rgba(255,114,114,0.62); }
       <div class="field-note">Max 20MB &middot; JPG, PNG, HEIC</div>
     </div>
 
+    <div class="field" id="photoConsentField" style="display:none;">
+      <label style="display:flex;align-items:flex-start;gap:9px;text-transform:none;letter-spacing:0;font-size:12px;font-weight:400;color:rgba(199,208,220,0.75);cursor:pointer;">
+        <input type="checkbox" id="photoConsent" style="width:15px;height:15px;margin-top:2px;accent-color:var(--gold);flex-shrink:0;">
+        <span>I consent to my photograph being used solely for the image similarity scan and confirm it will be permanently deleted within 96 hours of report delivery.</span>
+      </label>
+    </div>
+
     <button class="btn" id="submitBtn" onclick="openConfirm()">Review &amp; Submit &rarr;</button>
   </div>
 
@@ -845,6 +852,7 @@ document.getElementById('photoInput').addEventListener('change', function(e) {
     document.getElementById('photoArea').classList.add('has-photo');
     document.querySelector('.photo-icon').style.display = 'none';
     document.querySelector('.photo-hint').style.display = 'none';
+    document.getElementById('photoConsentField').style.display = 'block';
   };
   reader.readAsDataURL(file);
   hideError();
@@ -858,6 +866,8 @@ function removePhoto(e) {
   document.getElementById('photoArea').classList.remove('has-photo');
   document.querySelector('.photo-icon').style.display = '';
   document.querySelector('.photo-hint').style.display = '';
+  document.getElementById('photoConsentField').style.display = 'none';
+  document.getElementById('photoConsent').checked = false;
 }
 
 // Live phone validation - digits only, max 10
@@ -876,6 +886,7 @@ function openConfirm() {
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email to scan.'); return; }
   if (phone && phone.length !== 10) { showError('Phone number must be exactly 10 digits.'); return; }
   if (!email && !phone && !photoFile) { showError('Please provide at least one item to scan - email, phone, or photo.'); return; }
+  if (photoFile && !document.getElementById('photoConsent').checked) { showError('Please tick the photo consent checkbox above before proceeding.'); document.getElementById('errorBanner').scrollIntoView({behavior:'smooth', block:'center'}); return; }
 
   document.getElementById('cReportEmail').textContent = reportEmail;
 
