@@ -55,8 +55,9 @@ body::before{
 .wrap{width:min(100%,460px); animation:fadeUp .55s cubic-bezier(0.22,1,0.36,1) both;}
 @keyframes fadeUp{from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);}}
 
-.logo{display:flex; align-items:center; justify-content:center; gap:9px; margin-bottom:28px; font-family:'Space Grotesk'; font-weight:700; font-size:16px; letter-spacing:-0.01em; color:var(--ink);}
-.logo svg{width:26px; height:26px; flex-shrink:0;}
+.logo{display:flex; align-items:center; justify-content:center; margin-bottom:28px;}
+.logo img{height:33px; width:auto; display:block;}
+@media(max-width:480px){.logo img{height:28px;}}
 
 /* ============ CARD ============ */
 .card{
@@ -113,7 +114,23 @@ body::before{
   background:var(--purple-mist); color:var(--purple-deep); font-weight:600;
 }
 
-.hint-line{font-size:12px; color:var(--ink-faint); margin-bottom:16px; line-height:1.5;}
+/* scan section heading */
+.scan-heading{
+  margin-bottom:4px;
+  font-family:'Space Grotesk'; font-weight:600; font-size:14px; color:var(--ink);
+}
+.scan-subtext{
+  font-size:12px; color:var(--ink-soft); margin-bottom:14px; line-height:1.5;
+}
+
+/* privacy reassurance pill */
+.privacy-pill{
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:11.5px; font-weight:600; color:var(--ok);
+  background:rgba(22,163,74,0.08); border:1px solid rgba(22,163,74,0.18);
+  border-radius:999px; padding:5px 11px; margin-bottom:14px;
+}
+.privacy-pill svg{width:12px; height:12px; flex-shrink:0;}
 
 .btn-submit{
   position:relative;
@@ -247,13 +264,9 @@ body::before{
 <body>
 <div class="wrap">
   <div class="logo">
-    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="16" cy="16" r="15" fill="#7B5CFA" fill-opacity="0.12"/>
-      <circle cx="14" cy="14" r="7" stroke="#7B5CFA" stroke-width="2.2"/>
-      <line x1="19.5" y1="19.5" x2="25" y2="25" stroke="#7B5CFA" stroke-width="2.2" stroke-linecap="round"/>
-      <circle cx="14" cy="14" r="2.4" fill="#7B5CFA"/>
-    </svg>
-    scan my shadow
+    <a href="https://www.scanmyshadow.com" aria-label="Scan My Shadow — Home">
+      <img src="https://www.scanmyshadow.com/logo.png" alt="Scan My Shadow" loading="eager">
+    </a>
   </div>
 
   <div class="card" id="formCard">
@@ -270,7 +283,15 @@ body::before{
       <div class="field-note highlight">Your report will be sent here — this address itself won't be scanned.</div>
     </div>
 
-    <div class="hint-line">Give us at least one thing to scan below — an email, a phone number, or both.</div>
+    <div class="divider"></div>
+
+    <div class="scan-heading">What would you like us to scan?</div>
+    <div class="scan-subtext">At least one is required. You can scan both.</div>
+
+    <div class="privacy-pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Deleted After Your Scan
+    </div>
 
     <div class="field">
       <label>Email to scan <span class="opt">(optional)</span></label>
@@ -355,7 +376,7 @@ document.getElementById('phoneInput').addEventListener('input', function() {
   this.value = this.value.replace(/\D/g, '').slice(0, 10);
 });
 
-// rising particles for the success screen (matches homepage's fx-dark motif)
+// rising particles for the success screen
 (function initParticles(){
   const box = document.getElementById('successParticles');
   for (let i = 0; i < 12; i++) {
