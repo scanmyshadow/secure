@@ -9,309 +9,300 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box; margin:0; padding:0;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --bg:#FFFFFF;
-  --bg-tint:#FAF9FF;
-  --ink:#15121F;
-  --ink-soft:#605C73;
-  --ink-faint:#908DA3;
-  --purple:#7B5CFA;
-  --purple-deep:#5A3FE0;
-  --purple-mist:#F1EEFE;
-  --line:#E9E7F5;
-  --line-soft:#F0EEF9;
-  --card:#FBFAFF;
-  --ok:#16A34A;
-  --warn:#D97706;
-  --danger:#DC2626;
-  --danger-soft:rgba(220,38,38,0.08);
-  --shadow-sm:0 2px 8px rgba(43,29,102,0.05);
-  --shadow-md:0 14px 40px rgba(43,29,102,0.09);
+  --bg:#FFFFFF;--bg-tint:#FAF9FF;--ink:#15121F;--ink-soft:#605C73;--ink-faint:#908DA3;
+  --purple:#7B5CFA;--purple-deep:#5A3FE0;--purple-mist:#F1EEFE;
+  --line:#E9E7F5;--line-soft:#F0EEF9;
+  --ok:#16A34A;--danger:#DC2626;--danger-soft:rgba(220,38,38,0.08);
   --shadow-lg:0 30px 80px rgba(43,29,102,0.14);
 }
 html{-webkit-text-size-adjust:100%;}
 body{
-  min-height:100vh;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:'Inter',system-ui,sans-serif;
-  -webkit-font-smoothing:antialiased;
-  line-height:1.5;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:48px 18px;
-  overflow-x:hidden;
+  min-height:100vh;background:var(--bg);color:var(--ink);
+  font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+  line-height:1.5;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:48px 18px;overflow-x:hidden;
 }
 body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  background:radial-gradient(ellipse 760px 420px at 50% -8%, rgba(123,92,250,0.10), transparent 62%);
+  content:'';position:fixed;inset:0;z-index:-1;
+  background:radial-gradient(ellipse 760px 420px at 50% -8%,rgba(123,92,250,0.10),transparent 62%);
   pointer-events:none;
 }
-.wrap{width:min(100%,460px); animation:fadeUp .55s cubic-bezier(0.22,1,0.36,1) both;}
-@keyframes fadeUp{from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);}}
 
-.logo{display:flex; align-items:center; justify-content:center; margin-bottom:28px;}
-.logo img{height:33px; width:auto; display:block;}
-@media(max-width:480px){.logo img{height:28px;}}
+/* LOGO */
+.logo{display:flex;align-items:center;justify-content:center;margin-bottom:24px;}
+.logo img{height:33px;width:auto;display:block;}
 
-/* ============ CARD ============ */
+/* WRAP */
+.wrap{width:min(100%,880px);animation:fadeUp .55s cubic-bezier(0.22,1,0.36,1) both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* CARD — two-column on desktop, stacked on mobile */
 .card{
-  position:relative;
-  background:linear-gradient(180deg,#ffffff,#FCFBFF);
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:32px 28px 28px;
-  box-shadow:0 30px 80px rgba(43,29,102,0.16), 0 0 0 1px rgba(123,92,250,0.06), 0 2px 0 rgba(255,255,255,0.9) inset;
+  position:relative;background:linear-gradient(180deg,#ffffff,#FCFBFF);
+  border:1px solid var(--line);border-radius:22px;overflow:hidden;
+  box-shadow:0 30px 80px rgba(43,29,102,0.16),0 0 0 1px rgba(123,92,250,0.06),0 2px 0 rgba(255,255,255,0.9) inset;
+  display:grid;grid-template-columns:1fr 1px 1fr;
 }
+
+/* DIVIDER column */
+.v-divider{background:var(--line);}
+
+/* PANELS */
+.panel{padding:36px 32px;}
+.panel-left{display:flex;flex-direction:column;}
+.panel-right{display:flex;flex-direction:column;}
+
+/* badge */
 .card-badge{
-  display:inline-flex; align-items:center; gap:7px;
-  font-size:12px; font-weight:600; color:var(--purple);
-  background:var(--purple-mist); border-radius:999px; padding:6px 12px;
-  margin-bottom:16px;
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:12px;font-weight:600;color:var(--purple);
+  background:var(--purple-mist);border-radius:999px;padding:6px 12px;
+  margin-bottom:16px;width:fit-content;
 }
-.card-badge .dot{width:6px; height:6px; border-radius:50%; background:var(--ok); box-shadow:0 0 0 3px rgba(22,163,74,0.16);}
-.card-title{font-family:'Space Grotesk'; font-weight:600; font-size:24px; line-height:1.18; letter-spacing:-0.01em; margin-bottom:8px;}
-.card-sub{font-size:13.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:22px;}
-.divider{height:1px; background:var(--line); margin:20px 0;}
+.card-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px rgba(22,163,74,0.16);}
+.card-title{font-family:'Space Grotesk';font-weight:600;font-size:22px;line-height:1.18;letter-spacing:-0.01em;margin-bottom:8px;}
+.card-sub{font-size:13px;color:var(--ink-soft);line-height:1.6;margin-bottom:24px;}
 
-.error-banner{
-  display:none;
-  margin-bottom:16px;
-  padding:12px 14px;
-  border:1px solid rgba(220,38,38,0.22);
-  border-radius:11px;
-  background:var(--danger-soft);
-  color:var(--danger);
-  font-size:13px;
-  font-weight:600;
-  line-height:1.45;
-  animation:shake .3s ease;
-}
-@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
-
-.field{position:relative; margin-bottom:16px;}
-.field label{display:flex; align-items:center; gap:6px; margin-bottom:7px; font-size:12px; font-weight:600; color:var(--ink);}
-.field label .opt{color:var(--ink-faint); font-weight:500; font-size:11px;}
-.required-dot{width:5px; height:5px; border-radius:50%; background:var(--purple); box-shadow:0 0 0 3px var(--purple-mist);}
-.field svg.field-ic{position:absolute; left:15px; top:41px; width:17px; height:17px; color:var(--ink-faint); pointer-events:none;}
+/* fields */
+.field{position:relative;margin-bottom:16px;}
+.field label{display:flex;align-items:center;gap:6px;margin-bottom:7px;font-size:12px;font-weight:600;color:var(--ink);}
+.field label .opt{color:var(--ink-faint);font-weight:500;font-size:11px;}
+.required-dot{width:5px;height:5px;border-radius:50%;background:var(--purple);box-shadow:0 0 0 3px var(--purple-mist);}
+.field svg.field-ic{position:absolute;left:15px;top:41px;width:17px;height:17px;color:var(--ink-faint);pointer-events:none;}
 .field input{
-  width:100%; min-height:50px;
-  border:1px solid var(--line); background:var(--bg-tint); border-radius:13px;
-  padding:14px 15px 14px 42px; font-size:14.5px; font-family:'Inter'; color:var(--ink); outline:none;
-  transition:border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  width:100%;min-height:50px;
+  border:1px solid var(--line);background:var(--bg-tint);border-radius:13px;
+  padding:14px 15px 14px 42px;font-size:14px;font-family:'Inter';color:var(--ink);outline:none;
+  transition:border-color .2s ease,background .2s ease,box-shadow .2s ease;
 }
 .field input::placeholder{color:var(--ink-faint);}
 .field input:hover{border-color:rgba(123,92,250,0.30);}
-.field input:focus{border-color:var(--purple); background:#fff; box-shadow:0 0 0 4px rgba(123,92,250,0.12);}
-.field-note{margin-top:7px; font-size:11.5px; color:var(--ink-faint); line-height:1.5;}
+.field input:focus{border-color:var(--purple);background:#fff;box-shadow:0 0 0 4px rgba(123,92,250,0.12);}
+.field-note{margin-top:7px;font-size:11.5px;color:var(--ink-faint);line-height:1.5;}
 .field-note.highlight{
-  padding:8px 10px; border:1px solid var(--line); border-radius:9px;
-  background:var(--purple-mist); color:var(--purple-deep); font-weight:600;
+  padding:8px 10px;border:1px solid var(--line);border-radius:9px;
+  background:var(--purple-mist);color:var(--purple-deep);font-weight:600;
 }
 
-/* scan section heading */
-.scan-heading{
-  margin-bottom:4px;
-  font-family:'Space Grotesk'; font-weight:600; font-size:14px; color:var(--ink);
-}
-.scan-subtext{
-  font-size:12px; color:var(--ink-soft); margin-bottom:14px; line-height:1.5;
-}
+/* scan section */
+.scan-heading{font-family:'Space Grotesk';font-weight:600;font-size:14px;color:var(--ink);margin-bottom:3px;}
+.scan-subtext{font-size:12px;color:var(--ink-soft);margin-bottom:12px;line-height:1.5;}
 
-/* privacy reassurance pill */
+/* privacy pill */
 .privacy-pill{
-  display:inline-flex; align-items:center; gap:6px;
-  font-size:11.5px; font-weight:600; color:var(--ok);
-  background:rgba(22,163,74,0.08); border:1px solid rgba(22,163,74,0.18);
-  border-radius:999px; padding:5px 11px; margin-bottom:14px;
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11.5px;font-weight:600;color:var(--ok);
+  background:rgba(22,163,74,0.08);border:1px solid rgba(22,163,74,0.18);
+  border-radius:999px;padding:5px 11px;margin-bottom:14px;width:fit-content;
 }
-.privacy-pill svg{width:12px; height:12px; flex-shrink:0;}
+.privacy-pill svg{width:12px;height:12px;flex-shrink:0;}
 
+/* error */
+.error-banner{
+  display:none;margin-bottom:16px;padding:12px 14px;
+  border:1px solid rgba(220,38,38,0.22);border-radius:11px;
+  background:var(--danger-soft);color:var(--danger);
+  font-size:13px;font-weight:600;line-height:1.45;animation:shake .3s ease;
+}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+
+/* submit */
 .btn-submit{
-  position:relative;
-  width:100%; background:var(--purple); color:#fff; border:none; border-radius:13px;
-  padding:16px; font-size:14.5px; font-weight:600; font-family:'Inter'; cursor:pointer;
-  display:flex; align-items:center; justify-content:center; gap:8px;
-  margin-top:6px;
+  position:relative;width:100%;background:var(--purple);color:#fff;
+  border:none;border-radius:13px;padding:15px;
+  font-size:14px;font-weight:600;font-family:'Inter';cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:auto;
   box-shadow:0 10px 24px rgba(123,92,250,0.28);
   animation:cta-glow 2.8s ease-in-out infinite;
-  transition:background .2s ease, transform .15s ease, box-shadow .2s ease, opacity .18s ease;
+  transition:background .2s ease,transform .15s ease;
 }
-.btn-submit:hover:not(:disabled){background:var(--purple-deep); transform:translateY(-1px);}
-.btn-submit:disabled{opacity:.5; cursor:not-allowed; animation:none;}
-.btn-submit:disabled::before{display:none;}
-.btn-submit svg{width:16px; height:16px;}
-.btn-submit::before{content:""; position:absolute; inset:0; border-radius:13px; z-index:-1; animation:cta-ping 2.8s ease-out infinite;}
+.btn-submit:hover:not(:disabled){background:var(--purple-deep);transform:translateY(-1px);}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;animation:none;}
+.btn-submit svg{width:16px;height:16px;}
+.btn-submit::before{content:"";position:absolute;inset:0;border-radius:13px;z-index:-1;animation:cta-ping 2.8s ease-out infinite;}
 @keyframes cta-glow{0%,100%{box-shadow:0 10px 24px rgba(123,92,250,0.28);}50%{box-shadow:0 10px 30px rgba(123,92,250,0.48);}}
 @keyframes cta-ping{0%{box-shadow:0 0 0 0 rgba(123,92,250,0.45);}70%{box-shadow:0 0 0 14px rgba(123,92,250,0);}100%{box-shadow:0 0 0 0 rgba(123,92,250,0);}}
 
-/* ============ SUCCESS (dark, animated) ============ */
+/* delete note */
+.delete-note{text-align:center;font-size:11px;color:var(--ink-faint);margin-top:10px;line-height:1.5;}
+
+/* spacer pushes button to bottom in left panel */
+.spacer{flex:1;}
+
+/* ============ SUCCESS ============ */
 .success{
-  display:none;
-  position:relative;
-  overflow:hidden;
-  min-height:420px;
-  padding:56px 30px 46px;
-  border-radius:22px;
-  background:var(--ink);
-  color:#fff;
-  text-align:center;
-  box-shadow:var(--shadow-lg);
+  display:none;position:relative;overflow:hidden;
+  min-height:420px;padding:56px 30px 46px;
+  border-radius:22px;background:var(--ink);color:#fff;
+  text-align:center;box-shadow:var(--shadow-lg);
   animation:fadeUp .55s cubic-bezier(0.22,1,0.36,1) both;
 }
-.success .aurora{position:absolute; inset:0; z-index:0; pointer-events:none;}
-.success .aurora span{position:absolute; border-radius:50%; filter:blur(60px); opacity:.5; mix-blend-mode:screen;}
-.success .aurora .a1{width:320px; height:320px; background:radial-gradient(circle,#7B5CFA,transparent 68%); top:-110px; left:-40px; animation:drift1 16s ease-in-out infinite;}
-.success .aurora .a2{width:280px; height:280px; background:radial-gradient(circle,#45D18F,transparent 66%); bottom:-120px; right:-30px; animation:drift2 19s ease-in-out infinite;}
+.success .aurora{position:absolute;inset:0;z-index:0;pointer-events:none;}
+.success .aurora span{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;mix-blend-mode:screen;}
+.success .aurora .a1{width:320px;height:320px;background:radial-gradient(circle,#7B5CFA,transparent 68%);top:-110px;left:-40px;animation:drift1 16s ease-in-out infinite;}
+.success .aurora .a2{width:280px;height:280px;background:radial-gradient(circle,#45D18F,transparent 66%);bottom:-120px;right:-30px;animation:drift2 19s ease-in-out infinite;}
 @keyframes drift1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(40px,26px) scale(1.1);}}
 @keyframes drift2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-34px,-20px) scale(1.08);}}
-.success .particles{position:absolute; inset:0; z-index:1; pointer-events:none; overflow:hidden;}
-.success .particles i{position:absolute; bottom:-10px; width:3px; height:3px; border-radius:50%; background:rgba(180,150,255,.75); box-shadow:0 0 6px rgba(155,120,255,.9); animation:rise linear infinite;}
-@keyframes rise{0%{transform:translateY(0); opacity:0;}10%{opacity:1;}90%{opacity:.7;}100%{transform:translateY(-380px); opacity:0;}}
-.success>*{position:relative; z-index:2;}
-
+.success .particles{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+.success .particles i{position:absolute;bottom:-10px;width:3px;height:3px;border-radius:50%;background:rgba(180,150,255,.75);box-shadow:0 0 6px rgba(155,120,255,.9);animation:rise linear infinite;}
+@keyframes rise{0%{transform:translateY(0);opacity:0;}10%{opacity:1;}90%{opacity:.7;}100%{transform:translateY(-380px);opacity:0;}}
+.success>*{position:relative;z-index:2;}
 .success-circle{
-  width:80px; height:80px; margin:0 auto 26px;
-  display:flex; align-items:center; justify-content:center;
-  border:1px solid rgba(123,92,250,0.5); border-radius:50%;
-  background:rgba(255,255,255,0.04);
-  box-shadow:0 0 0 10px rgba(123,92,250,0.06);
+  width:80px;height:80px;margin:0 auto 26px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(123,92,250,0.5);border-radius:50%;
+  background:rgba(255,255,255,0.04);box-shadow:0 0 0 10px rgba(123,92,250,0.06);
   animation:circlePop .36s cubic-bezier(0.22,1,0.36,1) both;
-  position:relative; overflow:hidden; isolation:isolate;
+  position:relative;overflow:hidden;isolation:isolate;
 }
-@keyframes circlePop{from{opacity:0; transform:scale(.78);} to{opacity:1; transform:scale(1);}}
+@keyframes circlePop{from{opacity:0;transform:scale(.78);}to{opacity:1;transform:scale(1);}}
 .success-circle::before{
-  content:''; position:absolute; inset:-2px; border-radius:50%;
-  background:conic-gradient(from 0deg, transparent 0deg, transparent 62deg, #66EFAD 92deg, #B99BFF 118deg, transparent 148deg, transparent 360deg);
-  -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
-  mask:radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
+  content:'';position:absolute;inset:-2px;border-radius:50%;
+  background:conic-gradient(from 0deg,transparent 0deg,transparent 62deg,#66EFAD 92deg,#B99BFF 118deg,transparent 148deg,transparent 360deg);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px));
   animation:orbitRing 1.05s cubic-bezier(0.48,0,0.2,1) .12s both;
 }
-@keyframes orbitRing{0%{transform:rotate(0deg); opacity:1;}78%{transform:rotate(390deg); opacity:1;}100%{transform:rotate(420deg); opacity:.72;}}
+@keyframes orbitRing{0%{transform:rotate(0deg);opacity:1;}78%{transform:rotate(390deg);opacity:1;}100%{transform:rotate(420deg);opacity:.72;}}
 .success-circle::after{
-  content:''; position:absolute; inset:9px; border-radius:50%;
-  background:radial-gradient(circle, rgba(102,239,173,.28), rgba(69,209,143,.14));
-  transform:scale(0); opacity:0;
+  content:'';position:absolute;inset:9px;border-radius:50%;
+  background:radial-gradient(circle,rgba(102,239,173,.28),rgba(69,209,143,.14));
+  transform:scale(0);opacity:0;
   animation:greenFill .62s cubic-bezier(0.22,1,0.36,1) .96s forwards;
 }
-@keyframes greenFill{0%{transform:scale(0); opacity:0;}72%{transform:scale(1.08); opacity:1;}100%{transform:scale(1); opacity:1;}}
-.success-circle svg{width:32px; height:32px; position:relative; z-index:2; animation:checkDraw .32s ease 1.28s both;}
-@keyframes checkDraw{from{opacity:0; transform:scale(.65);} to{opacity:1; transform:scale(1);}}
-
-.success-title{font-family:'Space Grotesk'; font-weight:600; font-size:26px; margin-bottom:10px; animation:fadeUp .5s ease .26s both;}
-.success-divider{width:64px; height:1px; margin:0 auto 20px; background:linear-gradient(90deg,transparent,#B99BFF,#66EFAD,transparent); animation:fadeUp .5s ease .34s both;}
-.success-sub{max-width:300px; margin:0 auto; color:#C9C6DC; font-size:14.5px; line-height:1.7; animation:fadeUp .5s ease .42s both;}
+@keyframes greenFill{0%{transform:scale(0);opacity:0;}72%{transform:scale(1.08);opacity:1;}100%{transform:scale(1);opacity:1;}}
+.success-circle svg{width:32px;height:32px;position:relative;z-index:2;animation:checkDraw .32s ease 1.28s both;}
+@keyframes checkDraw{from{opacity:0;transform:scale(.65);}to{opacity:1;transform:scale(1);}}
+.success-title{font-family:'Space Grotesk';font-weight:600;font-size:26px;margin-bottom:10px;animation:fadeUp .5s ease .26s both;}
+.success-divider{width:64px;height:1px;margin:0 auto 20px;background:linear-gradient(90deg,transparent,#B99BFF,#66EFAD,transparent);animation:fadeUp .5s ease .34s both;}
+.success-sub{max-width:300px;margin:0 auto;color:#C9C6DC;font-size:14.5px;line-height:1.7;animation:fadeUp .5s ease .42s both;}
 .success-spam{
-  max-width:380px; display:flex; align-items:flex-start; justify-content:center; gap:9px;
-  margin:22px auto 0; padding:12px 14px; border:1px solid rgba(255,255,255,0.1); border-radius:11px;
-  background:rgba(255,255,255,0.045); color:#A8A5C0; font-size:12.5px; line-height:1.6;
+  max-width:380px;display:flex;align-items:flex-start;justify-content:center;gap:9px;
+  margin:22px auto 0;padding:12px 14px;border:1px solid rgba(255,255,255,0.1);border-radius:11px;
+  background:rgba(255,255,255,0.045);color:#A8A5C0;font-size:12.5px;line-height:1.6;
   animation:fadeUp .5s ease .5s both;
 }
-.success-spam svg{flex:0 0 auto; margin-top:3px; color:#B99BFF;}
+.success-spam svg{flex:0 0 auto;margin-top:3px;color:#B99BFF;}
 
 /* ============ MODAL ============ */
-.overlay{position:fixed; inset:0; z-index:200; background:rgba(21,18,31,0.5); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; padding:22px;}
-.overlay.open{display:flex; animation:fadeIn .2s ease both;}
-@keyframes fadeIn{from{opacity:0;} to{opacity:1;}}
+.overlay{position:fixed;inset:0;z-index:200;background:rgba(21,18,31,0.5);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:22px;}
+.overlay.open{display:flex;animation:fadeIn .2s ease both;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 .modal{
-  position:relative; width:min(100%,420px); background:#fff; border-radius:20px; padding:28px 26px;
-  box-shadow:var(--shadow-lg); animation:slideUp .25s cubic-bezier(0.22,1,0.36,1) both;
+  position:relative;width:min(100%,420px);background:#fff;border-radius:20px;padding:28px 26px;
+  box-shadow:var(--shadow-lg);animation:slideUp .25s cubic-bezier(0.22,1,0.36,1) both;
 }
-@keyframes slideUp{from{opacity:0; transform:translateY(14px) scale(.98);} to{opacity:1; transform:translateY(0) scale(1);}}
-.modal .close{position:absolute; top:16px; right:16px; background:none; border:none; color:var(--ink-faint); cursor:pointer; padding:4px; line-height:0;}
-.modal .close svg{width:18px; height:18px;}
-.modal-title{font-family:'Space Grotesk'; font-weight:600; font-size:20px; margin-bottom:6px;}
-.modal-sub{font-size:13px; color:var(--ink-soft); margin-bottom:18px; line-height:1.55;}
-
-.confirm-row{display:flex; align-items:flex-start; gap:12px; padding:13px 0; border-bottom:1px solid var(--line);}
+@keyframes slideUp{from{opacity:0;transform:translateY(14px) scale(.98);}to{opacity:1;transform:translateY(0) scale(1);}}
+.modal .close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--ink-faint);cursor:pointer;padding:4px;line-height:0;}
+.modal .close svg{width:18px;height:18px;}
+.modal-title{font-family:'Space Grotesk';font-weight:600;font-size:20px;margin-bottom:6px;}
+.modal-sub{font-size:13px;color:var(--ink-soft);margin-bottom:18px;line-height:1.55;}
+.confirm-row{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);}
 .confirm-row:last-of-type{border-bottom:0;}
-.confirm-icon{width:34px; height:34px; flex:0 0 auto; display:flex; align-items:center; justify-content:center; border-radius:10px; background:var(--purple-mist); color:var(--purple);}
-.confirm-icon svg{width:17px; height:17px;}
-.confirm-label{font-size:10px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:3px;}
-.confirm-value{font-size:14px; font-weight:600; color:var(--ink); word-break:break-word; overflow-wrap:anywhere;}
-.confirm-value.empty{color:var(--ink-faint); font-size:13px; font-style:italic; font-weight:500;}
-
-.modal-actions{display:flex; gap:10px; margin-top:22px;}
-.btn-ghost,.btn-confirm{min-height:46px; padding:13px 15px; border-radius:999px; font-family:'Inter'; font-size:13px; font-weight:700; cursor:pointer; border:none; transition:transform .18s ease, box-shadow .18s ease, opacity .18s ease;}
-.btn-ghost{flex:1; border:1px solid var(--line); background:#fff; color:var(--ink-soft);}
-.btn-ghost:hover{color:var(--ink); border-color:var(--ink-faint);}
-.btn-confirm{flex:2; background:var(--purple); color:#fff; box-shadow:0 14px 30px rgba(123,92,250,0.24);}
-.btn-confirm:hover:not(:disabled){background:var(--purple-deep); transform:translateY(-1px);}
-.btn-confirm:disabled{opacity:.5; cursor:not-allowed;}
-.submitting-spinner{display:inline-block; width:14px; height:14px; margin-right:7px; border:2px solid rgba(255,255,255,.35); border-top-color:#fff; border-radius:50%; vertical-align:-2px; animation:spin .72s linear infinite;}
+.confirm-icon{width:34px;height:34px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;border-radius:10px;background:var(--purple-mist);color:var(--purple);}
+.confirm-icon svg{width:17px;height:17px;}
+.confirm-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:3px;}
+.confirm-value{font-size:14px;font-weight:600;color:var(--ink);word-break:break-word;overflow-wrap:anywhere;}
+.confirm-value.empty{color:var(--ink-faint);font-size:13px;font-style:italic;font-weight:500;}
+.modal-actions{display:flex;gap:10px;margin-top:22px;}
+.btn-ghost,.btn-confirm{min-height:46px;padding:13px 15px;border-radius:999px;font-family:'Inter';font-size:13px;font-weight:700;cursor:pointer;border:none;transition:transform .18s ease,opacity .18s ease;}
+.btn-ghost{flex:1;border:1px solid var(--line);background:#fff;color:var(--ink-soft);}
+.btn-ghost:hover{color:var(--ink);border-color:var(--ink-faint);}
+.btn-confirm{flex:2;background:var(--purple);color:#fff;box-shadow:0 14px 30px rgba(123,92,250,0.24);}
+.btn-confirm:hover:not(:disabled){background:var(--purple-deep);transform:translateY(-1px);}
+.btn-confirm:disabled{opacity:.5;cursor:not-allowed;}
+.submitting-spinner{display:inline-block;width:14px;height:14px;margin-right:7px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;vertical-align:-2px;animation:spin .72s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-:focus-visible{outline:2px solid var(--purple); outline-offset:2px; border-radius:6px;}
-@media(prefers-reduced-motion:reduce){ .btn-submit,.btn-submit::before,.success .aurora span,.success .particles i{animation:none;} .wrap,.success,.overlay.open,.modal{animation:none;} }
+:focus-visible{outline:2px solid var(--purple);outline-offset:2px;border-radius:6px;}
 
-@media(max-width:520px){
-  body{padding:30px 14px; align-items:flex-start;}
-  .card{padding:26px 20px 22px; border-radius:18px;}
-  .card-title{font-size:21px;}
-  .success{min-height:400px; padding:46px 20px 36px; border-radius:18px;}
+/* ============ RESPONSIVE ============ */
+@media(max-width:660px){
+  body{padding:30px 14px;align-items:flex-start;}
+  .card{grid-template-columns:1fr;grid-template-rows:auto;}
+  .v-divider{width:auto;height:1px;}
+  .panel{padding:26px 20px;}
+  .btn-submit{margin-top:6px;}
+  .success{min-height:400px;padding:46px 20px 36px;border-radius:18px;}
   .success-title{font-size:22px;}
   .modal{padding:24px 20px;}
   .modal-actions{flex-direction:column;}
-  .btn-ghost,.btn-confirm{width:100%; flex:none;}
+  .btn-ghost,.btn-confirm{width:100%;flex:none;}
+}
+@media(prefers-reduced-motion:reduce){
+  .btn-submit,.btn-submit::before,.success .aurora span,.success .particles i{animation:none;}
+  .wrap,.success,.overlay.open,.modal{animation:none;}
 }
 </style>
 </head>
 <body>
 <div class="wrap">
+
   <div class="logo">
     <a href="https://www.scanmyshadow.com" aria-label="Scan My Shadow — Home">
-      <img src="https://www.scanmyshadow.com/logo.png" alt="Scan My Shadow" loading="eager">
+      <img src="https://raw.githubusercontent.com/scanmyshadow/secure/main/logo.png" alt="Scan My Shadow" loading="eager">
     </a>
   </div>
 
   <div class="card" id="formCard">
-    <div class="card-badge"><span class="dot"></span> Privacy Scan &middot; &#8377;498</div>
-    <div class="card-title">Let's confirm what we're scanning</div>
-    <div class="card-sub">Add the details below and we'll get your scan running. Your report lands in your inbox once it's ready.</div>
-    <div class="divider"></div>
-    <div class="error-banner" id="errorBanner"></div>
 
-    <div class="field">
-      <label>Report delivery email <span class="required-dot"></span></label>
-      <svg class="field-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-      <input type="email" id="reportEmailInput" placeholder="you@example.com" autocomplete="off">
-      <div class="field-note highlight">Your report will be sent here — this address itself won't be scanned.</div>
+    <!-- RIGHT PANEL: badge + title + delivery email -->
+    <div class="panel panel-right">
+      <div class="card-badge"><span class="dot"></span> Privacy Scan &middot; &#8377;498</div>
+      <div class="card-title">Let's confirm what we're scanning</div>
+      <div class="card-sub">Add the details below and we'll get your scan running. Your report lands in your inbox once it's ready.</div>
+
+      <div class="error-banner" id="errorBanner"></div>
+
+      <div class="field">
+        <label>Report delivery email <span class="required-dot"></span></label>
+        <svg class="field-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        <input type="email" id="reportEmailInput" placeholder="you@example.com" autocomplete="off">
+        <div class="field-note highlight">Your report will be sent here — this address itself won't be scanned.</div>
+      </div>
     </div>
 
-    <div class="divider"></div>
+    <!-- VERTICAL DIVIDER -->
+    <div class="v-divider"></div>
 
-    <div class="scan-heading">What would you like us to scan?</div>
-    <div class="scan-subtext">At least one is required. You can scan both.</div>
+    <!-- LEFT PANEL: scan fields + button -->
+    <div class="panel panel-left">
+      <div class="scan-heading">What would you like us to scan?</div>
+      <div class="scan-subtext">At least one is required. You can scan both.</div>
 
-    <div class="privacy-pill">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Deleted After Your Scan
+      <div class="privacy-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Deleted After Your Scan
+      </div>
+
+      <div class="field">
+        <label>Email to scan <span class="opt">(optional)</span></label>
+        <svg class="field-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+        <input type="email" id="emailInput" placeholder="the email you want scanned" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label>Phone number <span class="opt">(optional)</span></label>
+        <svg class="field-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+        <input type="tel" id="phoneInput" placeholder="10-digit number" autocomplete="off" maxlength="10">
+        <div class="field-note">Just the 10 digits — no country code.</div>
+      </div>
+
+      <div class="spacer"></div>
+
+      <button class="btn-submit" id="submitBtn" onclick="openConfirm()">
+        Review &amp; submit
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+      <div class="delete-note">Your scan data is deleted immediately after your report is sent.</div>
     </div>
 
-    <div class="field">
-      <label>Email to scan <span class="opt">(optional)</span></label>
-      <svg class="field-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
-      <input type="email" id="emailInput" placeholder="the email you want scanned" autocomplete="off">
-    </div>
-
-    <div class="field">
-      <label>Phone number <span class="opt">(optional)</span></label>
-      <svg class="field-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
-      <input type="tel" id="phoneInput" placeholder="10-digit number" autocomplete="off" maxlength="10">
-      <div class="field-note">Just the 10 digits — no country code.</div>
-    </div>
-
-    <button class="btn-submit" id="submitBtn" onclick="openConfirm()">
-      Review &amp; submit
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </button>
   </div>
 
+  <!-- SUCCESS -->
   <div class="success" id="successCard">
     <div class="aurora"><span class="a1"></span><span class="a2"></span></div>
     <div class="particles" id="successParticles"></div>
@@ -324,10 +315,11 @@ body::before{
     <div class="success-divider"></div>
     <div class="success-sub">We're scanning the web for your data now.<br>Your report will land in your inbox shortly.</div>
     <div class="success-spam">
-      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><line x1="8" y1="5" x2="8" y2="9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="11.5" r="0.75" fill="currentColor"/></svg>
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><line x1="8" y1="5" x2="8" y2="9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="11.5" r="0.75" fill="currentColor"/></svg>
       <span>Don't see it land? Check your <strong style="color:#fff;">Spam</strong> or <strong style="color:#fff;">Promotions</strong> folder.</span>
     </div>
   </div>
+
 </div>
 
 <!-- CONFIRM MODAL -->
@@ -338,29 +330,18 @@ body::before{
     </button>
     <div class="modal-title">Confirm your details</div>
     <div class="modal-sub">Take a quick look before we start your scan.</div>
-
     <div class="confirm-row">
       <div class="confirm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
-      <div>
-        <div class="confirm-label">Report delivery email</div>
-        <div class="confirm-value" id="cReportEmail"></div>
-      </div>
+      <div><div class="confirm-label">Report delivery email</div><div class="confirm-value" id="cReportEmail"></div></div>
     </div>
     <div class="confirm-row">
       <div class="confirm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg></div>
-      <div>
-        <div class="confirm-label">Email to scan</div>
-        <div class="confirm-value" id="cEmail"></div>
-      </div>
+      <div><div class="confirm-label">Email to scan</div><div class="confirm-value" id="cEmail"></div></div>
     </div>
     <div class="confirm-row">
       <div class="confirm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
-      <div>
-        <div class="confirm-label">Phone</div>
-        <div class="confirm-value" id="cPhone"></div>
-      </div>
+      <div><div class="confirm-label">Phone</div><div class="confirm-value" id="cPhone"></div></div>
     </div>
-
     <div class="modal-actions">
       <button class="btn-ghost" onclick="closeConfirm()">&larr; Edit</button>
       <button class="btn-confirm" id="confirmBtn" onclick="handleSubmit()">Confirm &amp; scan</button>
@@ -369,95 +350,81 @@ body::before{
 </div>
 
 <script>
-const WEBHOOK = 'https://hook.eu1.make.com/d64h0uqyu661dj1l2xwhayfnmwemmuyl';
+const WEBHOOK='https://hook.eu1.make.com/d64h0uqyu661dj1l2xwhayfnmwemmuyl';
 
-// Live phone validation — digits only, max 10
-document.getElementById('phoneInput').addEventListener('input', function() {
-  this.value = this.value.replace(/\D/g, '').slice(0, 10);
+document.getElementById('phoneInput').addEventListener('input',function(){
+  this.value=this.value.replace(/\D/g,'').slice(0,10);
 });
 
-// rising particles for the success screen
 (function initParticles(){
-  const box = document.getElementById('successParticles');
-  for (let i = 0; i < 12; i++) {
-    const s = document.createElement('i');
-    s.style.left = (Math.random() * 100) + '%';
-    s.style.animationDuration = (7 + Math.random() * 7) + 's';
-    s.style.animationDelay = (-Math.random() * 10) + 's';
-    const sc = 0.6 + Math.random() * 1.3;
-    s.style.width = (3 * sc) + 'px';
-    s.style.height = (3 * sc) + 'px';
+  const box=document.getElementById('successParticles');
+  for(let i=0;i<12;i++){
+    const s=document.createElement('i');
+    s.style.left=(Math.random()*100)+'%';
+    s.style.animationDuration=(7+Math.random()*7)+'s';
+    s.style.animationDelay=(-Math.random()*10)+'s';
+    const sc=0.6+Math.random()*1.3;
+    s.style.width=(3*sc)+'px';s.style.height=(3*sc)+'px';
     box.appendChild(s);
   }
 })();
 
-function openConfirm() {
+function openConfirm(){
   hideError();
-  const reportEmail = document.getElementById('reportEmailInput').value.trim();
-  const email = document.getElementById('emailInput').value.trim();
-  const phone = document.getElementById('phoneInput').value.trim();
-
-  if (!reportEmail) { showError('Report delivery email is required.'); return; }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reportEmail)) { showError('Please enter a valid report delivery email.'); return; }
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email to scan.'); return; }
-  if (phone && phone.length !== 10) { showError('Phone number must be exactly 10 digits.'); return; }
-  if (!email && !phone) { showError('Please provide at least one item to scan — email or phone.'); return; }
-
-  document.getElementById('cReportEmail').textContent = reportEmail;
-
-  const cEmail = document.getElementById('cEmail');
-  const cPhone = document.getElementById('cPhone');
-  if (email) { cEmail.textContent = email; cEmail.classList.remove('empty'); }
-  else { cEmail.textContent = 'Not provided'; cEmail.classList.add('empty'); }
-  if (phone) { cPhone.textContent = phone; cPhone.classList.remove('empty'); }
-  else { cPhone.textContent = 'Not provided'; cPhone.classList.add('empty'); }
-
+  const reportEmail=document.getElementById('reportEmailInput').value.trim();
+  const email=document.getElementById('emailInput').value.trim();
+  const phone=document.getElementById('phoneInput').value.trim();
+  if(!reportEmail){showError('Report delivery email is required.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reportEmail)){showError('Please enter a valid report delivery email.');return;}
+  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showError('Please enter a valid email to scan.');return;}
+  if(phone&&phone.length!==10){showError('Phone number must be exactly 10 digits.');return;}
+  if(!email&&!phone){showError('Please provide at least one item to scan — email or phone.');return;}
+  document.getElementById('cReportEmail').textContent=reportEmail;
+  const cEmail=document.getElementById('cEmail');
+  const cPhone=document.getElementById('cPhone');
+  if(email){cEmail.textContent=email;cEmail.classList.remove('empty');}
+  else{cEmail.textContent='Not provided';cEmail.classList.add('empty');}
+  if(phone){cPhone.textContent=phone;cPhone.classList.remove('empty');}
+  else{cPhone.textContent='Not provided';cPhone.classList.add('empty');}
   document.getElementById('modalOverlay').classList.add('open');
 }
 
-function closeConfirm() {
-  document.getElementById('modalOverlay').classList.remove('open');
-}
+function closeConfirm(){document.getElementById('modalOverlay').classList.remove('open');}
 
-async function handleSubmit() {
-  const confirmBtn = document.getElementById('confirmBtn');
-  confirmBtn.disabled = true;
-  confirmBtn.innerHTML = '<span class="submitting-spinner"></span>Submitting&hellip;';
-
-  const reportEmail = document.getElementById('reportEmailInput').value.trim();
-  const email = document.getElementById('emailInput').value.trim();
-  const phone = document.getElementById('phoneInput').value.trim();
-
-  const fd = new FormData();
-  fd.append('report_email', reportEmail);
-  if (email) fd.append('email', email);
-  if (phone) fd.append('phone', phone);
-
-  try {
-    const res = await fetch(WEBHOOK, { method: 'POST', body: fd });
-    if (!res.ok) throw new Error('Server error ' + res.status);
+async function handleSubmit(){
+  const confirmBtn=document.getElementById('confirmBtn');
+  confirmBtn.disabled=true;
+  confirmBtn.innerHTML='<span class="submitting-spinner"></span>Submitting&hellip;';
+  const reportEmail=document.getElementById('reportEmailInput').value.trim();
+  const email=document.getElementById('emailInput').value.trim();
+  const phone=document.getElementById('phoneInput').value.trim();
+  const fd=new FormData();
+  fd.append('report_email',reportEmail);
+  if(email)fd.append('email',email);
+  if(phone)fd.append('phone',phone);
+  try{
+    const res=await fetch(WEBHOOK,{method:'POST',body:fd});
+    if(!res.ok)throw new Error('Server error '+res.status);
     closeConfirm();
-    document.getElementById('formCard').style.display = 'none';
-    document.getElementById('successCard').style.display = 'block';
-  } catch (err) {
+    document.getElementById('formCard').style.display='none';
+    document.getElementById('successCard').style.display='block';
+  }catch(err){
     closeConfirm();
     showError('Something went wrong. Please try again.');
-    confirmBtn.disabled = false;
-    confirmBtn.innerHTML = 'Confirm &amp; scan';
+    confirmBtn.disabled=false;
+    confirmBtn.innerHTML='Confirm &amp; scan';
   }
 }
 
-function showError(msg) {
-  const b = document.getElementById('errorBanner');
-  b.textContent = msg;
-  b.style.display = 'block';
-  b.style.animation = 'none';
-  setTimeout(() => b.style.animation = '', 10);
+function showError(msg){
+  const b=document.getElementById('errorBanner');
+  b.textContent=msg;b.style.display='block';
+  b.style.animation='none';setTimeout(()=>b.style.animation='',10);
 }
-function hideError() { document.getElementById('errorBanner').style.display = 'none'; }
+function hideError(){document.getElementById('errorBanner').style.display='none';}
 
-document.getElementById('modalOverlay').addEventListener('click', function(e){ if (e.target === this) closeConfirm(); });
-document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeConfirm(); });
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeConfirm();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeConfirm();});
 </script>
 </body>
 </html>
