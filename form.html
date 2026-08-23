@@ -351,6 +351,7 @@ body::before{
 
 <script>
 const WEBHOOK='https://hook.eu1.make.com/d64h0uqyu661dj1l2xwhayfnmwemmuyl';
+const SCAN_ID=new URLSearchParams(window.location.search).get('payment_id')||'';
 
 document.getElementById('phoneInput').addEventListener('input',function(){
   this.value=this.value.replace(/\D/g,'').slice(0,10);
@@ -400,6 +401,7 @@ async function handleSubmit(){
   const phone=document.getElementById('phoneInput').value.trim();
   const fd=new FormData();
   fd.append('report_email',reportEmail);
+  fd.append('scan_id',SCAN_ID);
   if(email)fd.append('email',email);
   if(phone)fd.append('phone',phone);
   try{
