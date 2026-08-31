@@ -111,7 +111,7 @@ body::before{
 }
 .phone-combo input::placeholder{color:var(--ink-faint);}
 .country-dropdown{
-  position:absolute;top:calc(100% + 8px);left:0;width:290px;max-width:calc(100vw - 40px);z-index:40;
+  position:fixed;top:0;left:0;width:290px;max-width:calc(100vw - 40px);z-index:9999;
   background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-lg);
   opacity:0;visibility:hidden;transform:translateY(-6px) scale(0.98);transform-origin:top left;
   transition:opacity .16s ease,transform .16s ease,visibility .16s;overflow:hidden;
@@ -478,6 +478,24 @@ function selectCountry(c){
   document.getElementById('phoneInput').focus();
 }
 
+function positionDropdown(){
+  const combo=document.getElementById('phoneCombo');
+  const dd=document.getElementById('countryDropdown');
+  const r=combo.getBoundingClientRect();
+  const ddWidth=Math.min(290,window.innerWidth-40);
+  let left=r.left;
+  if(left+ddWidth>window.innerWidth-16){left=window.innerWidth-16-ddWidth;}
+  if(left<16)left=16;
+  let top=r.bottom+8;
+  const estHeight=340;
+  if(top+estHeight>window.innerHeight-16&&r.top>estHeight){
+    top=r.top-estHeight-8;
+  }
+  dd.style.left=left+'px';
+  dd.style.top=top+'px';
+  dd.style.width=ddWidth+'px';
+}
+
 function toggleCountryDropdown(e){
   e.stopPropagation();
   const dd=document.getElementById('countryDropdown');
@@ -485,17 +503,22 @@ function toggleCountryDropdown(e){
   const isOpen=dd.classList.contains('open');
   if(isOpen){closeCountryDropdown();}
   else{
+    positionDropdown();
     dd.classList.add('open');
     btn.setAttribute('aria-expanded','true');
     document.getElementById('countrySearch').value='';
     renderCountryList('');
     setTimeout(()=>document.getElementById('countrySearch').focus(),50);
+    window.addEventListener('scroll',positionDropdown,true);
+    window.addEventListener('resize',positionDropdown);
   }
 }
 
 function closeCountryDropdown(){
   document.getElementById('countryDropdown').classList.remove('open');
   document.getElementById('countrySelectBtn').setAttribute('aria-expanded','false');
+  window.removeEventListener('scroll',positionDropdown,true);
+  window.removeEventListener('resize',positionDropdown);
 }
 
 function filterCountries(){
