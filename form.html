@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scan My Shadow — Confirm Your Scan Details</title>
 <meta name="robots" content="noindex">
+<!-- Google Ads Conversion Tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18188455581"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18188455581');
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -352,6 +360,15 @@ body::before{
 <script>
 const WEBHOOK='https://hook.eu1.make.com/d64h0uqyu661dj1l2xwhayfnmwemmuyl';
 const SCAN_ID=new URLSearchParams(window.location.search).get('payment_id')||'';
+
+if(SCAN_ID){
+  gtag('event', 'conversion', {
+    'send_to': 'AW-18188455581/6-h0CO2gnLMcEJ2d9-BD',
+    'value': 498.0,
+    'currency': 'INR',
+    'transaction_id': SCAN_ID
+  });
+}
 
 document.getElementById('phoneInput').addEventListener('input',function(){
   this.value=this.value.replace(/\D/g,'').slice(0,10);
