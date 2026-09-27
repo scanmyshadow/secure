@@ -492,6 +492,18 @@ const COUNTRIES=[
 ];
 let selectedCountry=COUNTRIES[0];
 
+// Countries where locals commonly write a trunk/leading 0 that must be dropped
+// when prefixing the international dial code (e.g. AU 0400 123 456 -> +61400123456).
+const ZERO_STRIP_DIALS=['61','44','64','353','49','33','27','971'];
+function buildPhone(country,local){
+  if(!local)return '';
+  let digits=local;
+  if(digits.charAt(0)==='0' && ZERO_STRIP_DIALS.includes(country.dial.replace('+',''))){
+    digits=digits.slice(1);
+  }
+  return country.dial+digits;
+}
+
 function flagUrl(iso2){return 'https://flagcdn.com/w40/'+iso2+'.png';}
 function flagUrl2x(iso2){return 'https://flagcdn.com/w80/'+iso2+'.png';}
 
@@ -607,7 +619,7 @@ function openConfirm(){
   const reportEmail=document.getElementById('reportEmailInput').value.trim();
   const email=document.getElementById('emailInput').value.trim();
   const phoneLocal=document.getElementById('phoneInput').value.trim();
-  const phone=phoneLocal?selectedCountry.dial+phoneLocal:'';
+  const phone=buildPhone(selectedCountry,phoneLocal);
   if(!reportEmail){showError('Report delivery email is required.');return;}
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reportEmail)){showError('Please enter a valid report delivery email.');return;}
   if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showError('Please enter a valid email to scan.');return;}
@@ -632,7 +644,7 @@ async function handleSubmit(){
   const reportEmail=document.getElementById('reportEmailInput').value.trim();
   const email=document.getElementById('emailInput').value.trim();
   const phoneLocal=document.getElementById('phoneInput').value.trim();
-  const phone=phoneLocal?selectedCountry.dial+phoneLocal:'';
+  const phone=buildPhone(selectedCountry,phoneLocal);
   const fd=new FormData();
   fd.append('scan_id',SCAN_ID);
   fd.append('report_email',reportEmail);
